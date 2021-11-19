@@ -150,6 +150,7 @@ def programmkern(hauptfenster):
 			ids_gesamt "w2"
 		ON
 			rohdaten.befund2 = w2.befund''')     
+	# test
 	hauptfenster.anzeige_arbeitsschritt.setText('Über-Unter-Werte werden ergänzt')
 	hauptfenster.progressBar.setValue(75)
 	# Ergaenzen ueber_unter:

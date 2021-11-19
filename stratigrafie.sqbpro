@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/timo/Dropbox/Reuschenberg/2019_12_abfragen/stratigrafie.sqlite" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="9352"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,18:mainergebnis_abs_daten"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="abs_daten_gleich" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths/><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="ergebnis_abs_daten" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths/><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">--CREATE VIEW ergebnis_abs_daten AS
+SELECT
+	befund,
+	datierung,
+	0 &quot;reihenfolge&quot;,
+	'false' &quot;dat_gleich_od_nach&quot;,
+	'false' &quot;dat_gleich_od_vor&quot;,
+	dat_gleich &quot;gleich&quot;
+FROM
+	abs_daten_gleich
+UNION ALL
+-- aus ueber_unter abgeleitete ueber-Datierungen:
+select
+	ueber_unter_befunde.befund2 &quot;befund&quot;,
+	rohdaten_datierung.datierung,
+	min(reihenf_abs_dat.reihenfolge),
+	'false' &quot;dat_gleich_od_nach&quot;,
+	'true' &quot;dat_gleich_od_vor&quot;,
+	'false' &quot;gleich&quot;
+from 
+	ueber_unter_befunde,
+	rohdaten_datierung
+		LEFT join 
+			reihenf_abs_dat
+		on
+			rohdaten_datierung.datierung = reihenf_abs_dat.datierung
+where
+	ueber_unter_befunde.befund1 = rohdaten_datierung.befund
+and
+	befund2 not in (Select befund from abs_daten_gleich)
+GROUP BY
+	ueber_unter_befunde.befund2 ,
+	dat_gleich_od_nach,
+	dat_gleich_od_vor
+UNION ALL
+--union unter-Beziehungen (gleich od. vor Datierung)
+select
+	ueber_unter_befunde.befund1 &quot;befund&quot;,
+	rohdaten_datierung.datierung,
+	max(reihenf_abs_dat.reihenfolge),
+	'true' &quot;dat_gleich_od_nach&quot;,
+	'false' &quot;dat_gleich_od_vor&quot;,
+	'false' &quot;gleich&quot;
+from 
+	ueber_unter_befunde,
+	rohdaten_datierung
+		LEFT join 
+			reihenf_abs_dat
+		on
+			rohdaten_datierung.datierung = reihenf_abs_dat.datierung
+where
+	ueber_unter_befunde.befund2 = rohdaten_datierung.befund
+and
+	befund1 not in (Select befund from abs_daten_gleich)
+GROUP BY
+	ueber_unter_befunde.befund1,
+	dat_gleich_od_nach,
+	dat_gleich_od_vor</sql><sql name="SQL 2">select
+	ueber_unter_befunde.befund1 &quot;befund&quot;,
+	rohdaten_datierung.datierung,
+	min(reihenf_abs_dat.reihenfolge),
+	'true' &quot;dat_gleich_od_nach&quot;,
+	'false' &quot;dat_gleich_od_vor&quot;,
+	'false' &quot;gleich&quot;
+from 
+	ueber_unter_befunde,
+	rohdaten_datierung
+		LEFT join 
+			reihenf_abs_dat
+		on
+			rohdaten_datierung.datierung = reihenf_abs_dat.datierung
+where
+	ueber_unter_befunde.befund2 = rohdaten_datierung.befund
+and
+	befund1 not in (Select befund from abs_daten_gleich)
+GROUP BY
+	ueber_unter_befunde.befund1,
+	dat_gleich_od_nach,
+	dat_gleich_od_vor</sql><current_tab id="1"/></tab_sql></sqlb_project>
