@@ -10,28 +10,29 @@ from eingabe_daten_db import eing_datenb
 from progr_strati import programmstart
 from dateipfade import *
 
-def steuerung_progr(hauptfenster):
-	pfade_auslesen(hauptfenster)
-	programmstart(hauptfenster)
+def steuerung_progr(mainWin):
+	pfade_auslesen(mainWin)
+	programmstart(mainWin)
 	
 app = QApplication(sys.argv)
 window = QDialog()
-hauptfenster = uic.loadUi('gui_strati.ui')
-hauptfenster.show()
+mainWin = uic.loadUi('gui_strati.ui')
+mainWin.show()
+
 
 # Eingabe vorherige Dateipfade:
-hauptfenster.tab_pfad_rohdat_last.clicked.connect(lambda: call_prev_path(hauptfenster.dateipfad_rohdaten, 1))
-hauptfenster.tab_pfad_abs_dat_last.clicked.connect(lambda: call_prev_path(hauptfenster.dateipfad_abs_daten, 2))
-hauptfenster.tab_pfad_reihenf_last.clicked.connect(lambda: call_prev_path(hauptfenster.dateipfad_reihenf_abs_daten, 3))
+mainWin.tab_pfad_rohdat_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_rohdaten, 1))
+mainWin.tab_pfad_abs_dat_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_abs_daten, 2))
+mainWin.tab_pfad_reihenf_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_reihenf_abs_daten, 3))
 
 # Eingabe Dateipfade mittels Dialog:
-hauptfenster.ausw_dateipfad_rohdaten.clicked.connect(lambda: aufruf_dateipfad(hauptfenster.dateipfad_rohdaten, 1))
-hauptfenster.ausw_dateipfad_abs_daten.clicked.connect(lambda: aufruf_dateipfad(hauptfenster.dateipfad_abs_daten, 2))
-hauptfenster.ausw_dateipfad_reihenf_abs_daten.clicked.connect(lambda: aufruf_dateipfad(hauptfenster.dateipfad_reihenf_abs_daten, 3))
+mainWin.ausw_dateipfad_rohdaten.clicked.connect(lambda: aufruf_dateipfad(mainWin.dateipfad_rohdaten, 1))
+mainWin.ausw_dateipfad_abs_daten.clicked.connect(lambda: aufruf_dateipfad(mainWin.dateipfad_abs_daten, 2))
+mainWin.ausw_dateipfad_reihenf_abs_daten.clicked.connect(lambda: aufruf_dateipfad(mainWin.dateipfad_reihenf_abs_daten, 3))
 
-hauptfenster.button_start.clicked.connect(lambda: steuerung_progr(hauptfenster))
+mainWin.button_start.clicked.connect(lambda: steuerung_progr(mainWin))
 
 # Wenn abbrechen dann Fenster schließen, wenn O.K. dann Fenster schließen:
-hauptfenster.abbrechen_ok.rejected.connect(hauptfenster.reject) 
+#mainWin.abbrechen_ok.rejected.connect(mainWin.reject) 
 
 sys.exit(app.exec_())

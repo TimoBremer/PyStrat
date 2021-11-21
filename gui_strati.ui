@@ -1,304 +1,444 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>392</width>
-    <height>396</height>
+    <width>806</width>
+    <height>667</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Stratigrafie</string>
   </property>
-  <widget class="QDialogButtonBox" name="abbrechen_ok">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>350</y>
-     <width>189</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-   </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>801</width>
+      <height>561</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="widget">
+     <attribute name="title">
+      <string>Import</string>
+     </attribute>
+     <widget class="QToolButton" name="ausw_dateipfad_abs_daten">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>160</y>
+        <width>26</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select list-file with absolute data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="tab_pfad_abs_dat_last">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>160</y>
+        <width>26</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Select file of previous session</string>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset theme="document-revert">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="tab_pfad_rohdat_last">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>90</y>
+        <width>26</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select file of previous session&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset theme="document-revert">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dateipfad_abs_daten">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>160</y>
+        <width>281</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>70</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pfad Rohdaten Stratigrafie:</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="ausw_dateipfad_rohdaten">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>90</y>
+        <width>26</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select list-file with stratigraphical data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="ausw_dateipfad_reihenf_abs_daten">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>230</y>
+        <width>26</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select list-file with order of absolute data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset theme="document-open">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="QLabel" name="anzeige_arbeitsschritt">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>290</y>
+        <width>191</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dateipfad_reihenf_abs_daten">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>230</y>
+        <width>281</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>140</y>
+        <width>171</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pfad absolute Daten:</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="tab_pfad_reihenf_last">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>230</y>
+        <width>26</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>Select file of previous session</string>
+      </property>
+      <property name="text">
+       <string>...</string>
+      </property>
+      <property name="icon">
+       <iconset theme="document-revert">
+        <normaloff>.</normaloff>.</iconset>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>210</y>
+        <width>271</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pfad Reihenfolge absolute Daten:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="dateipfad_rohdaten">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>90</y>
+        <width>281</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QProgressBar" name="progressBar">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>310</y>
+        <width>331</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="button_start">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>360</y>
+        <width>131</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Stratigrafie</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Absolute Daten</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Berechnung</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Ergebnis Stratigrafie</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="title">
+      <string>Ergebnis Datierung</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QDialogButtonBox" name="abbrechen_ok">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>570</y>
+      <width>189</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="standardButtons">
+     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+    </property>
+   </widget>
   </widget>
-  <widget class="QLineEdit" name="dateipfad_rohdaten">
+  <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>40</y>
-     <width>281</width>
-     <height>25</height>
+     <x>0</x>
+     <y>0</y>
+     <width>806</width>
+     <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuDatei">
+    <property name="title">
+     <string>Datei</string>
+    </property>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>Export</string>
+     </property>
+     <addaction name="actionstratigrafische_Beziehungen"/>
+     <addaction name="actionErgebnis_absolute_Daten"/>
+    </widget>
+    <addaction name="actionProjekt_ffnen_2"/>
+    <addaction name="actionProjekt_speichern"/>
+    <addaction name="actionLaden"/>
+    <addaction name="menuExport"/>
+   </widget>
+   <widget class="QMenu" name="menuBearbeiten">
+    <property name="title">
+     <string>Bearbeiten</string>
+    </property>
+    <addaction name="actionManuelle_Eingabe_Stratigrafie"/>
+    <addaction name="actionManuelle_Eingabe_Datierungen"/>
+    <addaction name="actionManuelle_Eingabe_Reihenfolge_Datierungen"/>
+    <addaction name="actionAusschluss_Beziehungen"/>
+    <addaction name="actionProgrammstart_2"/>
+   </widget>
+   <widget class="QMenu" name="menuHilfe">
+    <property name="title">
+     <string>Hilfe</string>
+    </property>
+    <addaction name="actionAnleitung"/>
+    <addaction name="action_ber"/>
+   </widget>
+   <addaction name="menuDatei"/>
+   <addaction name="menuBearbeiten"/>
+   <addaction name="menuHilfe"/>
   </widget>
-  <widget class="QLineEdit" name="dateipfad_abs_daten">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>110</y>
-     <width>281</width>
-     <height>25</height>
-    </rect>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
    </property>
-  </widget>
-  <widget class="QLineEdit" name="dateipfad_reihenf_abs_daten">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>180</y>
-     <width>281</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
     <bool>false</bool>
-   </property>
+   </attribute>
   </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>20</y>
-     <width>221</width>
-     <height>17</height>
-    </rect>
-   </property>
+  <action name="actionLaden">
    <property name="text">
-    <string>Pfad Rohdaten Stratigrafie:</string>
+    <string>Datenimport</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>90</y>
-     <width>171</width>
-     <height>17</height>
-    </rect>
-   </property>
+  </action>
+  <action name="actionSpeichern">
    <property name="text">
-    <string>Pfad absolute Daten:</string>
+    <string>ProjektSpeichern</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>160</y>
-     <width>271</width>
-     <height>17</height>
-    </rect>
-   </property>
+  </action>
+  <action name="actionProgrammstart">
    <property name="text">
-    <string>Pfad Reihenfolge absolute Daten:</string>
+    <string>Programmstart</string>
    </property>
-  </widget>
-  <widget class="QToolButton" name="ausw_dateipfad_rohdaten">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>40</y>
-     <width>26</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select list-file with stratigraphical data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
+  </action>
+  <action name="actionProjekt_ffnen">
    <property name="text">
-    <string>...</string>
+    <string>Projekt Öffnen</string>
    </property>
-   <property name="icon">
-    <iconset theme="document-open"/>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="ausw_dateipfad_abs_daten">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>110</y>
-     <width>26</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select list-file with absolute data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
+  </action>
+  <action name="actionProjekt_speichern">
    <property name="text">
-    <string>...</string>
+    <string>Projekt speichern</string>
    </property>
-   <property name="icon">
-    <iconset theme="document-open"/>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="ausw_dateipfad_reihenf_abs_daten">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>180</y>
-     <width>26</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select list-file with order of absolute data&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
+  </action>
+  <action name="actionProjekt_ffnen_2">
    <property name="text">
-    <string>...</string>
+    <string>Projekt öffnen</string>
    </property>
-   <property name="icon">
-    <iconset theme="document-open"/>
-   </property>
-  </widget>
-  <widget class="QProgressBar" name="progressBar">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>260</y>
-     <width>331</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="value">
-    <number>0</number>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="button_start">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>310</y>
-     <width>131</width>
-     <height>24</height>
-    </rect>
-   </property>
+  </action>
+  <action name="actionManuelle_Eingabe_Stratigrafie">
    <property name="text">
-    <string>Start</string>
+    <string>Manuelle Eingabe Stratigrafie</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="anzeige_arbeitsschritt">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>240</y>
-     <width>191</width>
-     <height>20</height>
-    </rect>
-   </property>
+  </action>
+  <action name="actionManuelle_Eingabe_Datierungen">
    <property name="text">
-    <string/>
+    <string>Manuelle Eingabe Datierungen</string>
    </property>
-  </widget>
-  <widget class="QToolButton" name="tab_pfad_reihenf_last">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>180</y>
-     <width>26</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Select file of previous session</string>
-   </property>
+  </action>
+  <action name="actionManuelle_Eingabe_Reihenfolge_Datierungen">
    <property name="text">
-    <string>...</string>
+    <string>Manuelle Eingabe Reihenfolge Datierungen</string>
    </property>
-   <property name="icon">
-    <iconset theme="document-revert">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="tab_pfad_abs_dat_last">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>110</y>
-     <width>26</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>Select file of previous session</string>
-   </property>
+  </action>
+  <action name="actionstratigrafische_Beziehungen">
    <property name="text">
-    <string>...</string>
+    <string>Ergebnis stratigrafische Beziehungen</string>
    </property>
-   <property name="icon">
-    <iconset theme="document-revert">
-     <normaloff>.</normaloff>.</iconset>
-   </property>
-  </widget>
-  <widget class="QToolButton" name="tab_pfad_rohdat_last">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>40</y>
-     <width>26</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select file of previous session&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
+  </action>
+  <action name="actionErgebnis_absolute_Daten">
    <property name="text">
-    <string>...</string>
+    <string>Ergebnis absolute Daten</string>
    </property>
-   <property name="icon">
-    <iconset theme="document-revert"/>
+  </action>
+  <action name="actionAusschluss_Beziehungen">
+   <property name="text">
+    <string>Ausschluss Beziehungen</string>
    </property>
-  </widget>
+  </action>
+  <action name="actionAnleitung">
+   <property name="text">
+    <string>Anleitung</string>
+   </property>
+  </action>
+  <action name="action_ber">
+   <property name="text">
+    <string>Über</string>
+   </property>
+  </action>
+  <action name="actionProgrammstart_2">
+   <property name="text">
+    <string>Programmstart</string>
+   </property>
+  </action>
  </widget>
- <tabstops>
-  <tabstop>dateipfad_abs_daten</tabstop>
-  <tabstop>ausw_dateipfad_reihenf_abs_daten</tabstop>
-  <tabstop>ausw_dateipfad_abs_daten</tabstop>
-  <tabstop>button_start</tabstop>
-  <tabstop>dateipfad_reihenf_abs_daten</tabstop>
-  <tabstop>ausw_dateipfad_rohdaten</tabstop>
-  <tabstop>dateipfad_rohdaten</tabstop>
- </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>abbrechen_ok</sender>
-   <signal>rejected()</signal>
-   <receiver>Dialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>abbrechen_ok</sender>
-   <signal>accepted()</signal>
-   <receiver>Dialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
