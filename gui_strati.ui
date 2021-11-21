@@ -26,7 +26,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="widget">
+    <widget class="QWidget" name="tabImport">
      <attribute name="title">
       <string>Import</string>
      </attribute>
@@ -47,7 +47,7 @@
       </property>
       <property name="icon">
        <iconset theme="document-open">
-        <normaloff>.</normaloff>.</iconset>
+        <normaloff>../../.designer/backup</normaloff>../../.designer/backup</iconset>
       </property>
      </widget>
      <widget class="QToolButton" name="tab_pfad_abs_dat_last">
@@ -67,7 +67,7 @@
       </property>
       <property name="icon">
        <iconset theme="document-revert">
-        <normaloff>.</normaloff>.</iconset>
+        <normaloff>../../.designer/backup</normaloff>../../.designer/backup</iconset>
       </property>
      </widget>
      <widget class="QToolButton" name="tab_pfad_rohdat_last">
@@ -87,7 +87,7 @@
       </property>
       <property name="icon">
        <iconset theme="document-revert">
-        <normaloff>.</normaloff>.</iconset>
+        <normaloff>../../.designer/backup</normaloff>../../.designer/backup</iconset>
       </property>
      </widget>
      <widget class="QLineEdit" name="dateipfad_abs_daten">
@@ -130,7 +130,7 @@
       </property>
       <property name="icon">
        <iconset theme="document-open">
-        <normaloff>.</normaloff>.</iconset>
+        <normaloff>../../.designer/backup</normaloff>../../.designer/backup</iconset>
       </property>
      </widget>
      <widget class="QToolButton" name="ausw_dateipfad_reihenf_abs_daten">
@@ -150,7 +150,7 @@
       </property>
       <property name="icon">
        <iconset theme="document-open">
-        <normaloff>.</normaloff>.</iconset>
+        <normaloff>../../.designer/backup</normaloff>../../.designer/backup</iconset>
       </property>
      </widget>
      <widget class="QLabel" name="anzeige_arbeitsschritt">
@@ -209,7 +209,7 @@
       </property>
       <property name="icon">
        <iconset theme="document-revert">
-        <normaloff>.</normaloff>.</iconset>
+        <normaloff>../../.designer/backup</normaloff>../../.designer/backup</iconset>
       </property>
      </widget>
      <widget class="QLabel" name="label_3">
@@ -266,6 +266,23 @@
      <attribute name="title">
       <string>Stratigrafie</string>
      </attribute>
+     <widget class="QTableWidget" name="tabImpStrati">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>801</width>
+        <height>531</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <property name="columnCount">
+       <number>1</number>
+      </property>
+      <column/>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -293,7 +310,7 @@
      <rect>
       <x>0</x>
       <y>570</y>
-      <width>189</width>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -301,7 +318,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
     <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     <set>QDialogButtonBox::Cancel</set>
     </property>
    </widget>
   </widget>
@@ -440,5 +457,38 @@
   </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>abbrechen_ok</sender>
+   <signal>rejected()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>333</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>abbrechen_ok</sender>
+   <signal>accepted()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>402</x>
+     <y>333</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
