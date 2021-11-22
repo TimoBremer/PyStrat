@@ -17,9 +17,7 @@ def steuerung_progr(mainWin):
 	result_tabs(mainWin)
 	
 app = QApplication(sys.argv)
-#window = QDialog()
 mainWin = uic.loadUi('gui_strati.ui')
-
 
 mainWin.show()
 # Eingabe vorherige Dateipfade:

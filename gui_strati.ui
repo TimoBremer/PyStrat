@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tabImport">
      <attribute name="title">
@@ -264,7 +264,7 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Stratigrafie</string>
+      <string>Stratigr.</string>
      </attribute>
      <widget class="QTableWidget" name="tabImpStrati">
       <property name="geometry">
@@ -279,29 +279,76 @@
        <number>0</number>
       </property>
       <property name="columnCount">
-       <number>1</number>
+       <number>0</number>
       </property>
-      <column/>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Absolute Daten</string>
+      <string>Abs. Daten</string>
      </attribute>
+     <widget class="QTableWidget" name="tabImpAbs">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>801</width>
+        <height>531</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <property name="columnCount">
+       <number>0</number>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
-      <string>Berechnung</string>
+      <string>Reihenf. abs. Dat.</string>
      </attribute>
+     <widget class="QTableWidget" name="tabOrderAbs">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>801</width>
+        <height>531</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <property name="columnCount">
+       <number>0</number>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>Ergebnis Stratigrafie</string>
+      <string>Ergeb. Strat.</string>
      </attribute>
+     <widget class="QTableWidget" name="tabResStrat">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>801</width>
+        <height>531</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <property name="columnCount">
+       <number>0</number>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_6">
      <attribute name="title">
-      <string>Ergebnis Datierung</string>
+      <string>Ergeb. Dat.</string>
      </attribute>
     </widget>
    </widget>
