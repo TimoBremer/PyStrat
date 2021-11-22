@@ -1,6 +1,5 @@
 # _*_ coding: utf-8 _*_
 
-# Nullen als leere Felder darstellen
 # Möglichkeit zum Kopieren/Download
 # Reiter für Fehler etc. erscheinen erst, wenn nötig
 
@@ -51,7 +50,9 @@ class FillTables:
             _ncol = 0
             for value in row:
                 value = str(value)
-                self.gui_tab.setItem(_nrow, _ncol, QtWidgets.QTableWidgetItem(value))
+                # "None" muss herausgefiltert werden, sieht sonst doof aus in Tabelle
+                if not 'None' in value:
+                    self.gui_tab.setItem(_nrow, _ncol, QtWidgets.QTableWidgetItem(value))
                 _ncol = _ncol +1
             _nrow = _nrow +1
     
