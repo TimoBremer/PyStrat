@@ -30,7 +30,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabImport">
      <attribute name="title">
@@ -165,9 +165,9 @@
      <widget class="QLabel" name="anzeige_arbeitsschritt">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>290</y>
-        <width>191</width>
+        <x>10</x>
+        <y>470</y>
+        <width>631</width>
         <height>20</height>
        </rect>
       </property>
@@ -377,7 +377,8 @@
        <string>Save as</string>
       </property>
       <property name="icon">
-       <iconset theme="document-save-as"/>
+       <iconset theme="document-save-as">
+        <normaloff>.</normaloff>.</iconset>
       </property>
      </widget>
     </widget>

@@ -36,7 +36,6 @@ def call_prev_path(textfeld, zeile_txt_file):
 	textfeld.setText(pfad)
 
 def aufruf_dateipfad(textfeld, zeile_txt_file):
-	# This is executed when the button is pressed
 	parent = tk.Tk()
 	# Ask the user to select a single file name
 	file_types = [('Textdateien', '*.csv *.txt'), ('All files', '*')]

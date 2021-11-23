@@ -4,6 +4,8 @@
 # Reiter für Fehler etc. erscheinen erst, wenn nötig
 
 import sys
+import csv
+from tkinter.constants import S
 from init_db import c, conn
 from PyQt5 import QtWidgets
 import os
@@ -46,7 +48,6 @@ class FillTables:
         _nrow = _nrow[0]
         self.gui_tab.setRowCount(_nrow)
     
-    # mit Dekoratoren arbeiten, damit die Funktion sowohl in Tabelle schreibt als auch in CSV-Datei!
     def fill_table(self):
         sql_tab = self.db_select()
         _nrow = 0
@@ -76,28 +77,21 @@ class StoreabTabs(FillTables):
         self.save_but = save_but
         FillTables.__init__(self, db_tab, gui_tab, head_lab)
     
-        self.save_but.clicked.connect(lambda:self.file_dialog())
+        self.save_but.clicked.connect(lambda:self.write_csv())
     
     def file_dialog(self):
         parent = tk.Tk()
         # Ask the user to select a single file name
-        pfad = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+        path = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
         parent.destroy()
+        return(path.name)
 
-
-    # def handleSave(self):
-    #     path = QtGui.QFileDialog.getSaveFileName(
-    #             self, 'Save File', '', 'CSV(*.csv)')
-    #     if not path.isEmpty():
-    #         with open(unicode(path), 'wb') as stream:
-    #             writer = csv.writer(stream)
-    #             for row in range(self.table.rowCount()):
-    #                 rowdata = []
-    #                 for column in range(self.table.columnCount()):
-    #                     item = self.table.item(row, column)
-    #                     if item is not None:
-    #                         rowdata.append(
-    #                             unicode(item.text()).encode('utf8'))
-    #                     else:
-    #                         rowdata.append('')
-    #                 writer.writerow(rowdata)
+    def write_csv(self):
+        file_name = self.file_dialog()
+        sql_tab = self.db_select()
+        print(sql_tab)
+        with open(file_name, 'w', encoding='UTF8', newline='') as csvfile:
+            # "mit with open schließt sich das Fenster automatisch, wenn Befehle abgearbeitet sind"
+            writer = csv.writer(csvfile)
+            writer.writerow(self.head_lab)
+            writer.writerows(sql_tab)
