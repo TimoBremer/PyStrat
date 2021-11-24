@@ -5,22 +5,28 @@
 
 import sys
 import csv
+import os
 from tkinter.constants import S
 from init_db import c, conn
 from PyQt5 import QtWidgets
 import os
 import tkinter as tk
 from tkinter import filedialog
+from dateipfade import save_previous_paths, get_prev_path
 
 def result_tabs(mainWin):
+    #// TODO: Delete Tabs wenn keine Tabellen oder keine Daten in DB
     impStrati = FillTables('rohdaten', mainWin.tabInStrati, ['left', 'relation', 'right'])
     absData = FillTables('rohdaten_datierung', mainWin.tabInAbs, ['feature', 'date/period'])
     orderAbs = FillTables('reihenf_abs_dat', mainWin.tabInOrderAbs, ['period', 'order'])
-    resStrat = StoreabTabs('ergebnis_abs_daten', mainWin.tabResStrat, mainWin.saveResStrat, ['feature', 'from', 'till'])
+    resStrat = StoreabTabs('ergebnis_strati_bef', mainWin.tabResStrat, mainWin.saveResStrat, ['feature under', 'feature above'])
+    resDates = StoreabTabs('ergebnis_abs_daten', mainWin.tabResDates, mainWin.saveResDates, ['feature', 'from', 'till'])
+    
     impStrati.create_fill()
     absData.create_fill()
     orderAbs.create_fill()
     resStrat.create_fill()
+    resDates.create_fill()
 
 class FillTables:
     def __init__(self, db_tab, gui_tab, head_lab=''):
@@ -79,19 +85,34 @@ class StoreabTabs(FillTables):
     
         self.save_but.clicked.connect(lambda:self.write_csv())
     
+    #// FIXME: das doppelt sich als stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):
+        initialdir = get_prev_path('prev_dir_storage' ,1)
         parent = tk.Tk()
         # Ask the user to select a single file name
-        path = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+        if initialdir == False:
+            path = filedialog.asksaveasfile(mode='w', defaultextension=".csv")
+        else:
+            path = filedialog.asksaveasfile(mode='w', initialdir=initialdir, defaultextension=".csv")
         parent.destroy()
+        self.save_prev_dir(path.name)
         return(path.name)
-
+    
+    def save_prev_dir(self, path):
+        path = os.path.dirname(path)
+        list_path = []
+        list_path.append(path)
+        save_previous_paths('prev_dir_storage', list_path)
+    
     def write_csv(self):
         file_name = self.file_dialog()
         sql_tab = self.db_select()
-        print(sql_tab)
         with open(file_name, 'w', encoding='UTF8', newline='') as csvfile:
             # "mit with open schließt sich das Fenster automatisch, wenn Befehle abgearbeitet sind"
             writer = csv.writer(csvfile)
             writer.writerow(self.head_lab)
             writer.writerows(sql_tab)
+
+#// TODO: Subclass zum Bearbeiten der Tabellen
+    # gibt es schon für GIS-Datenbankeditor
+    # muss allerdings stark angepasst werden

@@ -9,6 +9,7 @@ def initial_db():
 	c.execute('CREATE TABLE rohdaten_datierung (befund, datierung)')
 	c.execute('CREATE TABLE reihenf_abs_dat (datierung TEXT UNIQUE, reihenfolge INTEGER UNIQUE)')
 	c.execute('CREATE TABLE ausschluss_rohdaten (befund1, ueber_unter TEXT, befund2)')   
+	#// FIXME: Subphasen stimmt wahrscheinlich irgendetwas nicht mit!
 	c.execute('CREATE TABLE vorschl_subphasen(befund, datierung, schichten_darueber, schichten_darunter, subphase)')   
 	# bindet im ersten Schritt, die Reihenfolge an die absoluten Daten:
 	c.execute('''CREATE VIEW "dat_reihenf" AS 

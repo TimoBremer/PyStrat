@@ -8,17 +8,17 @@ from tkinter import filedialog
 from eingabe_daten_db import eing_datenb
 
 # muss die Pfade nach dem Ausführen in Datei speichern
-def save_previous_paths(list_paths):
-	txt_file = open("letzte_pfade", "w")
+def save_previous_paths(file, list_paths):
+	txt_file = open(file, "w")
 	txt_file.write('# speichert die zuletzt verwendeten Dateipfade\n')
 	txt_file.close()
-	txt_file = open("letzte_pfade", "a")
+	txt_file = open(file, "a")
 	for path in list_paths:
 		txt_file.write(path + "\n")
 	txt_file.close()
 
-def get_prev_path(zeile_txt_file):
-	txt_file = open("letzte_pfade", "r")
+def get_prev_path(file, zeile_txt_file):
+	txt_file = open(file, "r")
 	pfade = txt_file.readlines()
 	txt_file.close()
 	if len(pfade) >= zeile_txt_file +1: # +1, weil in der 1. Zeile der Datei nur eine Info steht
@@ -31,7 +31,7 @@ def get_prev_path(zeile_txt_file):
 def call_prev_path(textfeld, zeile_txt_file):
 	txt_file = open("letzte_pfade", "r")
 	pfade = txt_file.readlines()
-	pfad = get_prev_path(zeile_txt_file)
+	pfad = get_prev_path("letzte_pfade", zeile_txt_file)
 	textfeld.clear()
 	textfeld.setText(pfad)
 
@@ -39,8 +39,8 @@ def aufruf_dateipfad(textfeld, zeile_txt_file):
 	parent = tk.Tk()
 	# Ask the user to select a single file name
 	file_types = [('Textdateien', '*.csv *.txt'), ('All files', '*')]
-	initialdir = os.path.dirname(get_prev_path(zeile_txt_file))
-	if get_prev_path(zeile_txt_file) == False:
+	initialdir = os.path.dirname(get_prev_path("letzte_pfade", zeile_txt_file))
+	if initialdir == False:
 		pfad = filedialog.askopenfilename(title='Select a file', filetypes=file_types, parent=parent)
 	else:
 		pfad = filedialog.askopenfilename(title='Select a file', initialdir = initialdir, filetypes=file_types, parent=parent)	
@@ -57,4 +57,4 @@ def pfade_auslesen(hauptfenster):
 	eing_datenb(pfad_rohdaten, pfad_abs_daten, pfad_reihenf_abs_daten)
 	# Pfade in Textdatei für zukünftige Durchläufe schreiben
 	list_paths = [pfad_rohdaten, pfad_abs_daten, pfad_reihenf_abs_daten]
-	save_previous_paths(list_paths)
+	save_previous_paths("letzte_pfade", list_paths)
