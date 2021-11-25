@@ -10,20 +10,19 @@ from eingabe_daten_db import eing_datenb
 from progr_strati import programmstart
 from fill_tables import result_tabs
 from dateipfade import *
+from gui_windows import app, mainWin
 
 def steuerung_progr(mainWin):
 	pfade_auslesen(mainWin)
 	programmstart(mainWin)
 	result_tabs(mainWin)
 
-def close_tab(tab):
-    tab.removeTab(1)
-
-app = QApplication(sys.argv)
-mainWin = uic.loadUi('gui_strati.ui')
+#app = QApplication(sys.argv)
+#mainWin = uic.loadUi('gui_strati.ui')
+#test = uic.loadUi('test.ui')
 mainWin.show()
 # #mainWin.tabWidget.removeTab(0)
-# mainWin.tabWidget.addTab(QWidget(), 'Name')
+# mainWin.tabWidget.addTab(test, 'Name')
 # Eingabe vorherige Dateipfade:
 mainWin.tab_pfad_rohdat_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_rohdaten, 1))
 mainWin.tab_pfad_abs_dat_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_abs_daten, 2))

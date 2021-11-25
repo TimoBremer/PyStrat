@@ -8,11 +8,12 @@ import csv
 import os
 from tkinter.constants import S
 from init_db import c, conn
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, uic
 import os
 import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
+from gui_windows import mainWin
 
 def result_tabs(mainWin):
     #// TODO: Delete Tabs wenn keine Tabellen oder keine Daten in DB
@@ -34,12 +35,7 @@ class FillTables:
         self.head_lab = head_lab
         self.gui_tab = gui_tab
     
-    # def table_has_data(self):
-    #     #print('Funktion läuft')
-    #     sql_bef = 'SELECT COUNT(*) FROM {}'.format(self.db_tab)
-    #     c.execute(sql_bef)
-    #     if c.fetchone()[0]==1:
-    #         print('Table exists!')
+        self.test = uic.loadUi('test.ui')
 
     def db_select(self):
         # SQL-Befehl und Result-Set (Objekt) als return:
@@ -80,10 +76,14 @@ class FillTables:
         self.gui_tab.setSortingEnabled(True)
         self.gui_tab.setHorizontalHeaderLabels(self.head_lab)
     
+    def add_tab(self):
+        #from aufruf_gui_strati import mainWin
+        mainWin.tabWidget.addTab(self.test, 'Name')
+    
     def create_fill(self):
         #self.table_has_data()
         if self.nrow_tab() > 0:
-            # create tab eventually
+            self.add_tab()
             self.ncol_tab()
             self.fill_table()
             self.tune_table()
