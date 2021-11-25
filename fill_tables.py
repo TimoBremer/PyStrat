@@ -34,6 +34,13 @@ class FillTables:
         self.head_lab = head_lab
         self.gui_tab = gui_tab
     
+    # def table_has_data(self):
+    #     #print('Funktion läuft')
+    #     sql_bef = 'SELECT COUNT(*) FROM {}'.format(self.db_tab)
+    #     c.execute(sql_bef)
+    #     if c.fetchone()[0]==1:
+    #         print('Table exists!')
+
     def db_select(self):
         # SQL-Befehl und Result-Set (Objekt) als return:
         sql_bef = 'SELECT * FROM {}'.format(self.db_tab)
@@ -53,6 +60,7 @@ class FillTables:
         _nrow = c.fetchone()
         _nrow = _nrow[0]
         self.gui_tab.setRowCount(_nrow)
+        return(_nrow)
     
     def fill_table(self):
         sql_tab = self.db_select()
@@ -73,10 +81,12 @@ class FillTables:
         self.gui_tab.setHorizontalHeaderLabels(self.head_lab)
     
     def create_fill(self):
-        self.ncol_tab()
-        self.nrow_tab()
-        self.fill_table()
-        self.tune_table()
+        #self.table_has_data()
+        if self.nrow_tab() > 0:
+            # create tab eventually
+            self.ncol_tab()
+            self.fill_table()
+            self.tune_table()
 
 class StoreabTabs(FillTables):
     def __init__(self, db_tab, gui_tab, save_but, head_lab):
@@ -85,7 +95,7 @@ class StoreabTabs(FillTables):
     
         self.save_but.clicked.connect(lambda:self.write_csv())
     
-    #// FIXME: das doppelt sich als stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
+    #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):
         initialdir = get_prev_path('prev_dir_storage' ,1)
         parent = tk.Tk()
