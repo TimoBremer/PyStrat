@@ -15,7 +15,7 @@ from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 
-def result_tabs(mainWin):
+def result_tabs():
     #// TODO: Delete Tabs wenn keine Tabellen oder keine Daten in DB
     impStrati = FillTables('rohdaten', mainWin.tabInStrati, ['left', 'relation', 'right'])
     absData = FillTables('rohdaten_datierung', mainWin.tabInAbs, ['feature', 'date/period'])
@@ -92,8 +92,9 @@ class StoreabTabs(FillTables):
     def __init__(self, db_tab, gui_tab, save_but, head_lab):
         self.save_but = save_but
         FillTables.__init__(self, db_tab, gui_tab, head_lab)
-    
-        self.save_but.clicked.connect(lambda:self.write_csv())
+
+        #save = self.save_but
+        save_but.clicked.connect(lambda:self.write_csv())
     
     #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):

@@ -4,6 +4,7 @@
 from init_db import c, conn
 from fehlerbeh import fehlerkontrolle, fehlersuche, check_initalf_rohdat
 from tab_create import create_ergeb
+from gui_windows import mainWin
 
 # Wenn kein Fehler Auftritt wird Ergänzung der Werte durchgefuehrt,
 # ...bis Anzahl der Zeilen konstant ist:
@@ -38,9 +39,9 @@ def ergaenzungsschleife(tabelle, anw_fehlerkontrolle):
 	if anw_fehlerkontrolle == True and fehler == False: #...und einmal zum Schluss
 		fehler = fehlerkontrolle()
 
-def programmkern(hauptfenster):
+def programmkern():
 	# in Basistabelle gleich werden "Gegenwerte" eingetragen, z.B. 3=5, 5=3     
-	hauptfenster.anzeige_arbeitsschritt.setText('Programm gestartet')
+	mainWin.anzeige_arbeitsschritt.setText('Programm gestartet')
 	c.execute('CREATE TABLE gleich (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))')
 	c.execute('''INSERT OR IGNORE into
 			gleich (w1, w2)
@@ -59,12 +60,12 @@ def programmkern(hauptfenster):
 			rohdaten_gef
 		where
 			ueber_unter = "gleich"''')     
-	hauptfenster.anzeige_arbeitsschritt.setText('Gleich-Werte werden ergänzt')	
-	hauptfenster.progressBar.setValue(25)
+	mainWin.anzeige_arbeitsschritt.setText('Gleich-Werte werden ergänzt')	
+	mainWin.progressBar.setValue(25)
 	print('Gleich-Werte werden ergänzt')
 	## ...erster Aufruf der Funktion:
 	ergaenzungsschleife('gleich', False)
-	hauptfenster.progressBar.setValue(50)
+	mainWin.progressBar.setValue(50)
 	
 	## die Folgenden SQL-Befehle dienen im Grunde dazu, eine fortlaufende ID zu erstellen, was schwierig ist, da ältere SQlite-Versionen keine row_count Fensterfunktion haben
 	# Zuweisung von Ids zu gruppierten Gleich-Werten, wobei alle gleichgesetzten Befunde eine ID bekommen:
@@ -151,18 +152,18 @@ def programmkern(hauptfenster):
 		ON
 			rohdaten.befund2 = w2.befund''')     
 	# test
-	hauptfenster.anzeige_arbeitsschritt.setText('Über-Unter-Werte werden ergänzt')
-	hauptfenster.progressBar.setValue(75)
+	mainWin.anzeige_arbeitsschritt.setText('Über-Unter-Werte werden ergänzt')
+	mainWin.progressBar.setValue(75)
 	# Ergaenzen ueber_unter:
 	ergaenzungsschleife('ueber_unter', True)
-	hauptfenster.anzeige_arbeitsschritt.setText('fertig')
-	hauptfenster.progressBar.setValue(100)
+	mainWin.anzeige_arbeitsschritt.setText('fertig')
+	mainWin.progressBar.setValue(100)
 
-def programmstart(hauptfenster):
+def programmstart():
 	if check_initalf_rohdat()==True:
 		print('Abbruch: Widerspruch in eingegeben Daten derart "Befund 1 über Befund 1" gefunden')	
 	else:
-		programmkern(hauptfenster)
+		programmkern()
 	# Ergebnisse in Tabellen:
 	create_ergeb()
 	# Datenbank aufräumen:

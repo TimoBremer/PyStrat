@@ -6,6 +6,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog
 from eingabe_daten_db import eing_datenb
+from gui_windows import mainWin
 
 # muss die Pfade nach dem Ausführen in Datei speichern
 def save_previous_paths(file, list_paths):
@@ -48,12 +49,11 @@ def aufruf_dateipfad(textfeld, zeile_txt_file):
 	textfeld.clear()
 	textfeld.setText(pfad)
 	
-def pfade_auslesen(hauptfenster):
-	##from aufruf_gui_strati import hauptfenster
+def pfade_auslesen():
 	# Pfad aus GUI nach Eingabe wieder auslesen:
-	pfad_rohdaten = hauptfenster.dateipfad_rohdaten.displayText()
-	pfad_abs_daten = hauptfenster.dateipfad_abs_daten.displayText()
-	pfad_reihenf_abs_daten = hauptfenster.dateipfad_reihenf_abs_daten.displayText()
+	pfad_rohdaten = mainWin.dateipfad_rohdaten.displayText()
+	pfad_abs_daten = mainWin.dateipfad_abs_daten.displayText()
+	pfad_reihenf_abs_daten = mainWin.dateipfad_reihenf_abs_daten.displayText()
 	eing_datenb(pfad_rohdaten, pfad_abs_daten, pfad_reihenf_abs_daten)
 	# Pfade in Textdatei für zukünftige Durchläufe schreiben
 	list_paths = [pfad_rohdaten, pfad_abs_daten, pfad_reihenf_abs_daten]
