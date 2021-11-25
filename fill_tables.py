@@ -17,12 +17,14 @@ from gui_windows import mainWin
 
 def result_tabs():
     #// TODO: Delete Tabs wenn keine Tabellen oder keine Daten in DB
-    impStrati = FillTables('rohdaten', mainWin.tabInStrati, ['left', 'relation', 'right'])
-    absData = FillTables('rohdaten_datierung', mainWin.tabInAbs, ['feature', 'date/period'])
-    orderAbs = FillTables('reihenf_abs_dat', mainWin.tabInOrderAbs, ['period', 'order'])
-    resStrat = StoreabTabs('ergebnis_strati_bef', mainWin.tabResStrat, mainWin.saveResStrat, ['feature under', 'feature above'])
-    resDates = StoreabTabs('ergebnis_abs_daten', mainWin.tabResDates, mainWin.saveResDates, ['feature', 'from', 'till'])
-    
+    impStrati = FillTables('rohdaten', 'gui_tab_save.ui', ['left', 'relation', 'right'])
+    absData = FillTables('rohdaten_datierung', 'gui_tab_save.ui', ['feature', 'date/period'])
+    orderAbs = FillTables('reihenf_abs_dat', 'gui_tab_save.ui', ['period', 'order'])
+    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', ['feature under', 'feature above'])
+    resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', ['feature', 'from', 'till'])
+    # // FIXME: Speichern-Button wird noch nicht korrekt angesprochen!
+    # //TODO: Tabellen mit Input-Daten brauchen evtl. keinen Speichern-Button?
+
     impStrati.create_fill()
     absData.create_fill()
     orderAbs.create_fill()
@@ -34,8 +36,9 @@ class FillTables:
         self.db_tab = db_tab
         self.head_lab = head_lab
         self.gui_tab = gui_tab
-    
-        self.test = uic.loadUi('test.ui')
+
+        # //TODO: Individuelle Tabs erstellens
+        self.gui_tab = uic.loadUi(gui_tab)
 
     def db_select(self):
         # SQL-Befehl und Result-Set (Objekt) als return:
@@ -47,7 +50,7 @@ class FillTables:
     def ncol_tab(self):
         first_row = self.db_select()
         _ncol = len(first_row[0])
-        self.gui_tab.setColumnCount(_ncol)
+        self.gui_tab.table.setColumnCount(_ncol)
 
     def nrow_tab(self):
         # ermittelt die Anzahl der Zeilen
@@ -55,7 +58,7 @@ class FillTables:
         c.execute(sql_bef)
         _nrow = c.fetchone()
         _nrow = _nrow[0]
-        self.gui_tab.setRowCount(_nrow)
+        self.gui_tab.table.setRowCount(_nrow)
         return(_nrow)
     
     def fill_table(self):
@@ -67,18 +70,19 @@ class FillTables:
                 value = str(value)
                 # "None" muss herausgefiltert werden, sieht sonst doof aus in Tabelle
                 if not 'None' in value:
-                    self.gui_tab.setItem(_nrow, _ncol, QtWidgets.QTableWidgetItem(value))
+                    self.gui_tab.table.setItem(_nrow, _ncol, QtWidgets.QTableWidgetItem(value))
                 _ncol = _ncol +1
             _nrow = _nrow +1
     
     def tune_table(self):
         # Header und Sortierfunktion:
-        self.gui_tab.setSortingEnabled(True)
-        self.gui_tab.setHorizontalHeaderLabels(self.head_lab)
+        self.gui_tab.table.setSortingEnabled(True)
+        self.gui_tab.table.setHorizontalHeaderLabels(self.head_lab)
     
     def add_tab(self):
         #from aufruf_gui_strati import mainWin
-        mainWin.tabWidget.addTab(self.test, 'Name')
+        mainWin.tabWidget.addTab(self.gui_tab, 'Name')
+        # //TODO: Name muss noch als Variable an Funktion übergeben werden
     
     def create_fill(self):
         #self.table_has_data()
@@ -89,12 +93,10 @@ class FillTables:
             self.tune_table()
 
 class StoreabTabs(FillTables):
-    def __init__(self, db_tab, gui_tab, save_but, head_lab):
-        self.save_but = save_but
+    def __init__(self, db_tab, gui_tab, head_lab):
         FillTables.__init__(self, db_tab, gui_tab, head_lab)
 
-        #save = self.save_but
-        save_but.clicked.connect(lambda:self.write_csv())
+        self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
     
     #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):
