@@ -94,7 +94,6 @@ class StoreabTabs(FillTables):
         FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
         self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
-        #self.gui_tab.saveRes.clicked.connect(lambda:print('Tab läuft schonmal!'))
     
     #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):
@@ -133,11 +132,12 @@ class EditTabs(FillTables):
         FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
         self.upd_rows = []
-        self.gui_tab.table.cellChanged.connect(lambda:self.check_last_row())
+        self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
 
     def build_tab(self):
         self.create_fill()
         self.add_row()
+        self.buttons_akt_deakt(False)
     
     def add_row(self):
         self._nrow = self._nrow + 1
@@ -154,21 +154,20 @@ class EditTabs(FillTables):
         # mir ist nicht ganz klar warum hier Korrektur -1 nötig?
         if self._nrow -1 in self.rowids_selec_rows():
             self.add_row()
-        print(self.rowids_selec_rows(), self._nrow)
 
-    # def ids_selec_rows(self, rows):
-    #     #ermittelt aus Spaltennummern der Tabelle die Datenbank-Ids
-    #     ids = []
-    #     for row in rows:
-    #         id = self.fenster.tab_funkt.item(row, self.n_spalten_ges-1).text()
-    #         ids.append(id)
-    #     return(ids)
+    def buttons_akt_deakt(self, status):
+        self.gui_tab.saveChanges.setEnabled(status)
+        self.gui_tab.applyChanges.setEnabled(status)
 
-    # def check_update(self):
-    #     #wird durch Signal aufgerufen, wenn Werte geändert werden
-    #     #wenn ja, werden Änderungen zur Variable self.upd_rows hinzugetan
-    #     upd_rows = self.upd_rows + self.rowids_selec_rows()
-    #     #hierdurch werden Dubletten gelöscht:
-    #     self.upd_rows = list(set(upd_rows))
-    #     #ausgegraute Buttons aktivieren:
-    #     # self.buttons_akt_deakt(True)
+    #// TODO: Funktion zum Löschen von Zeilen
+    
+    def edit_table(self):
+        self.check_last_row()
+        #ausgegraute Buttons aktivieren:
+        self.buttons_akt_deakt(True)
+
+    #// TODO: Tab. in DB wenn apply
+    #// TODO: Tab. in CSV wenn save 
+
+    
+    
