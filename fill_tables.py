@@ -17,11 +17,11 @@ from gui_windows import mainWin
 
 def result_tabs():
     #// TODO: Delete Tabs wenn keine Tabellen oder keine Daten in DB
-    impStrati = FillTables('rohdaten', 'gui_tab_save.ui', ['left', 'relation', 'right'])
-    absData = FillTables('rohdaten_datierung', 'gui_tab_save.ui', ['feature', 'date/period'])
-    orderAbs = FillTables('reihenf_abs_dat', 'gui_tab_save.ui', ['period', 'order'])
-    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', ['feature under', 'feature above'])
-    resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', ['feature', 'from', 'till'])
+    impStrati = FillTables('rohdaten', 'gui_tab_save.ui', 'strat. rel.', ['left', 'relation', 'right'])
+    absData = FillTables('rohdaten_datierung', 'gui_tab_save.ui', 'abs. data', ['feature', 'date/period'])
+    orderAbs = FillTables('reihenf_abs_dat', 'gui_tab_save.ui', 'periods order', ['period', 'order'])
+    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'strat. res.', ['feature under', 'feature above'])
+    resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'dating', ['feature', 'from', 'till'])
     # // FIXME: Speichern-Button wird noch nicht korrekt angesprochen!
     # //TODO: Tabellen mit Input-Daten brauchen evtl. keinen Speichern-Button?
 
@@ -32,10 +32,11 @@ def result_tabs():
     resDates.create_fill()
 
 class FillTables:
-    def __init__(self, db_tab, gui_tab, head_lab=''):
+    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab=''):
         self.db_tab = db_tab
         self.head_lab = head_lab
         self.gui_tab = gui_tab
+        self.gui_tab_name = gui_tab_name
 
         # //TODO: Individuelle Tabs erstellens
         self.gui_tab = uic.loadUi(gui_tab)
@@ -81,8 +82,7 @@ class FillTables:
     
     def add_tab(self):
         #from aufruf_gui_strati import mainWin
-        mainWin.tabWidget.addTab(self.gui_tab, 'Name')
-        # //TODO: Name muss noch als Variable an Funktion übergeben werden
+        mainWin.tabWidget.addTab(self.gui_tab, self.gui_tab_name)
     
     def create_fill(self):
         #self.table_has_data()
@@ -93,8 +93,8 @@ class FillTables:
             self.tune_table()
 
 class StoreabTabs(FillTables):
-    def __init__(self, db_tab, gui_tab, head_lab):
-        FillTables.__init__(self, db_tab, gui_tab, head_lab)
+    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
+        FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
         self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
     
