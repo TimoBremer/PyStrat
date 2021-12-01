@@ -16,16 +16,14 @@ from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 
 def result_tabs():
-    impStrati = FillTables('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
-    absData = FillTables('rohdaten_datierung', 'gui_tab_apply.ui', 'Abs. Data', ['feature', 'date/period'])
-    orderAbs = FillTables('reihenf_abs_dat', 'gui_tab_apply.ui', 'Periods Order', ['period', 'order'])
+    impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
+    absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Abs. Data', ['feature', 'date/period'])
+    orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Periods Order', ['period', 'order'])
     resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature under', 'feature above'])
     resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
-    # // FIXME: Speichern-Button wird noch nicht korrekt angesprochen!
-    # //TODO: Tabellen mit Input-Daten brauchen evtl. keinen Speichern-Button?
 
-    impStrati.create_fill()
-    absData.create_fill()
+    impStrati.build_tab()
+    absData.build_tab()
     orderAbs.create_fill()
     resStrat.create_fill()
     resDates.create_fill()
@@ -37,8 +35,8 @@ class FillTables:
         self.gui_tab = gui_tab
         self.gui_tab_name = gui_tab_name
 
-        # //TODO: Tabs mit individuellen Uis/separaten Funktionen erstellen
         self.gui_tab = uic.loadUi(gui_tab)
+        self._nrow = 0
 
     def db_select(self):
         # SQL-Befehl und Result-Set (Objekt) als return:
@@ -54,12 +52,12 @@ class FillTables:
 
     def nrow_tab(self):
         # ermittelt die Anzahl der Zeilen
+        # // TODO: SELECT ROWID, *  FROM rohdaten
         sql_bef = 'SELECT COUNT(*) FROM {}'.format(self.db_tab)
         c.execute(sql_bef)
         _nrow = c.fetchone()
-        _nrow = _nrow[0]
-        self.gui_tab.table.setRowCount(_nrow)
-        return(_nrow)
+        self._nrow = _nrow[0]
+        self.gui_tab.table.setRowCount(self._nrow)
     
     def fill_table(self):
         sql_tab = self.db_select()
@@ -84,8 +82,8 @@ class FillTables:
         mainWin.tabWidget.addTab(self.gui_tab, self.gui_tab_name)
     
     def create_fill(self):
-        #self.table_has_data()
-        if self.nrow_tab() > 0:
+        self.nrow_tab()
+        if self._nrow > 0:
             self.add_tab()
             self.ncol_tab()
             self.fill_table()
@@ -95,8 +93,8 @@ class StoreabTabs(FillTables):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
         FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
-        #self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
-        self.gui_tab.saveRes.clicked.connect(lambda:print('Tab läuft schonmal!'))
+        self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
+        #self.gui_tab.saveRes.clicked.connect(lambda:print('Tab läuft schonmal!'))
     
     #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):
@@ -129,3 +127,48 @@ class StoreabTabs(FillTables):
 #// TODO: Subclass zum Bearbeiten der Tabellen
     # gibt es schon für GIS-Datenbankeditor
     # muss allerdings stark angepasst werden
+
+class EditTabs(FillTables):
+    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
+        FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
+
+        self.upd_rows = []
+        self.gui_tab.table.cellChanged.connect(lambda:self.check_last_row())
+
+    def build_tab(self):
+        self.create_fill()
+        self.add_row()
+    
+    def add_row(self):
+        self._nrow = self._nrow + 1
+        self.gui_tab.table.setRowCount(self._nrow)
+    
+    def rowids_selec_rows(self):
+        #gibt die Spaltennummern des QTableWidgets wieder
+        rows = sorted(set(index.row() for index in
+            self.gui_tab.table.selectedIndexes()))
+        return(rows)
+    
+    def check_last_row(self):
+        # adds another row in when the last row has been edited
+        # mir ist nicht ganz klar warum hier Korrektur -1 nötig?
+        if self._nrow -1 in self.rowids_selec_rows():
+            self.add_row()
+        print(self.rowids_selec_rows(), self._nrow)
+
+    # def ids_selec_rows(self, rows):
+    #     #ermittelt aus Spaltennummern der Tabelle die Datenbank-Ids
+    #     ids = []
+    #     for row in rows:
+    #         id = self.fenster.tab_funkt.item(row, self.n_spalten_ges-1).text()
+    #         ids.append(id)
+    #     return(ids)
+
+    # def check_update(self):
+    #     #wird durch Signal aufgerufen, wenn Werte geändert werden
+    #     #wenn ja, werden Änderungen zur Variable self.upd_rows hinzugetan
+    #     upd_rows = self.upd_rows + self.rowids_selec_rows()
+    #     #hierdurch werden Dubletten gelöscht:
+    #     self.upd_rows = list(set(upd_rows))
+    #     #ausgegraute Buttons aktivieren:
+    #     # self.buttons_akt_deakt(True)
