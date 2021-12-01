@@ -16,12 +16,11 @@ from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 
 def result_tabs():
-    #// TODO: Delete Tabs wenn keine Tabellen oder keine Daten in DB
-    impStrati = FillTables('rohdaten', 'gui_tab_save.ui', 'strat. rel.', ['left', 'relation', 'right'])
-    absData = FillTables('rohdaten_datierung', 'gui_tab_save.ui', 'abs. data', ['feature', 'date/period'])
-    orderAbs = FillTables('reihenf_abs_dat', 'gui_tab_save.ui', 'periods order', ['period', 'order'])
-    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'strat. res.', ['feature under', 'feature above'])
-    resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'dating', ['feature', 'from', 'till'])
+    impStrati = FillTables('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
+    absData = FillTables('rohdaten_datierung', 'gui_tab_apply.ui', 'Abs. Data', ['feature', 'date/period'])
+    orderAbs = FillTables('reihenf_abs_dat', 'gui_tab_apply.ui', 'Periods Order', ['period', 'order'])
+    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature under', 'feature above'])
+    resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
     # // FIXME: Speichern-Button wird noch nicht korrekt angesprochen!
     # //TODO: Tabellen mit Input-Daten brauchen evtl. keinen Speichern-Button?
 
@@ -38,7 +37,7 @@ class FillTables:
         self.gui_tab = gui_tab
         self.gui_tab_name = gui_tab_name
 
-        # //TODO: Individuelle Tabs erstellens
+        # //TODO: Tabs mit individuellen Uis/separaten Funktionen erstellen
         self.gui_tab = uic.loadUi(gui_tab)
 
     def db_select(self):
@@ -96,7 +95,8 @@ class StoreabTabs(FillTables):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
         FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
-        self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
+        #self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
+        self.gui_tab.saveRes.clicked.connect(lambda:print('Tab läuft schonmal!'))
     
     #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
     def file_dialog(self):
