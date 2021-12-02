@@ -8,12 +8,16 @@ import csv
 import os
 from tkinter.constants import S
 from init_db import c, conn
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5.QtCore import QEvent, Qt
+from PyQt5.QtWidgets import QMenu
 import os
 import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
+#from PyQt5.QtCore import QPoint
+from PyQt5.QtGui import QCursor
 
 def result_tabs():
     impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
@@ -135,6 +139,14 @@ class EditTabs(FillTables):
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
         self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
 
+        # right-click event on cells:
+        self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.gui_tab.table.customContextMenuRequested.connect(self.right_click)
+        # or right click event on header:
+        self.headers = self.gui_tab.table.verticalHeader()
+        self.headers.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.headers.customContextMenuRequested.connect(self.right_click)
+
     def build_tab(self):
         self.create_fill()
         self.add_row()
@@ -173,10 +185,28 @@ class EditTabs(FillTables):
             self.fill_table()
             self.tune_table()
             self.buttons_akt_deakt(False)
+    
+    def right_click(self, event):
+        menu = QMenu()
+        menu.addAction('skip')
+        if len(self.rowids_selec_rows()) > 1:
+            action_del = menu.addAction('delete selected rows')
+        else:
+            action_del = menu.addAction('delete selected row')
+        action = menu.exec_(self.gui_tab.mapFromParent(QCursor.pos()))
+        if action == action_del:
+            self.delete_rows()
+    
+    def delete_rows(self):
+        ids = self.rowids_selec_rows()
+        # must be in reversed order because the table rearranges the indices afte deleting the first row:
+        ids = reversed(ids)
+        print(ids)
+        for id in ids:
+            print(id)
+            self.gui_tab.table.removeRow(id)
+        self.buttons_akt_deakt(True)
 
     #// TODO: Tab. in DB wenn apply
     #// TODO: Tab. in CSV wenn save
-        # existiert schon für andere Tabellen – anpassen
-
-    
-    
+        # existiert schon für andere Tabellen – anpassen 
