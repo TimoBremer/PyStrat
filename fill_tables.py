@@ -133,6 +133,7 @@ class EditTabs(FillTables):
 
         self.upd_rows = []
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
+        self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
 
     def build_tab(self):
         self.create_fill()
@@ -158,6 +159,7 @@ class EditTabs(FillTables):
     def buttons_akt_deakt(self, status):
         self.gui_tab.saveChanges.setEnabled(status)
         self.gui_tab.applyChanges.setEnabled(status)
+        self.gui_tab.Reset.setEnabled(status)
 
     #// TODO: Funktion zum Löschen von Zeilen
     
@@ -165,9 +167,16 @@ class EditTabs(FillTables):
         self.check_last_row()
         #ausgegraute Buttons aktivieren:
         self.buttons_akt_deakt(True)
+    
+    def reset_changes(self):
+            self.ncol_tab()
+            self.fill_table()
+            self.tune_table()
+            self.buttons_akt_deakt(False)
 
     #// TODO: Tab. in DB wenn apply
-    #// TODO: Tab. in CSV wenn save 
+    #// TODO: Tab. in CSV wenn save
+        # existiert schon für andere Tabellen – anpassen
 
     
     
