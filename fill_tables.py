@@ -6,18 +6,18 @@
 import sys
 import csv
 import os
-from tkinter.constants import S
-from init_db import c, conn
+# from tkinter.constants import S
+from init_db import c #, conn
 from PyQt5 import QtWidgets, uic, QtGui, QtCore
-from PyQt5.QtCore import QEvent, Qt
+#from PyQt5.QtCore import QEvent, Qt
 from PyQt5.QtWidgets import QMenu
+from PyQt5.QtGui import QCursor
 import os
 import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 #from PyQt5.QtCore import QPoint
-from PyQt5.QtGui import QCursor
 
 def result_tabs():
     impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
@@ -143,14 +143,15 @@ class EditTabs(FillTables):
         self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.gui_tab.table.customContextMenuRequested.connect(self.right_click)
         # or right click event on header:
-        self.headers = self.gui_tab.table.verticalHeader()
-        self.headers.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
-        self.headers.customContextMenuRequested.connect(self.right_click)
+        self.header = self.gui_tab.table.verticalHeader()
+        self.header.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.header.customContextMenuRequested.connect(self.right_click)
 
     def build_tab(self):
         self.create_fill()
         self.add_row()
         self.buttons_akt_deakt(False)
+        #// FIXME: Buttons deaktivieren funktioniert bei der Tabelle mit der Reihenfolge nicht
     
     def add_row(self):
         self._nrow = self._nrow + 1
@@ -200,7 +201,7 @@ class EditTabs(FillTables):
     def delete_rows(self):
         ids = self.rowids_selec_rows()
         # must be in reversed order because the table rearranges the indices afte deleting the first row:
-        ids = reversed(ids)
+        ids = sorted(ids, reverse=True)
         print(ids)
         for id in ids:
             print(id)
