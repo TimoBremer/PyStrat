@@ -8,7 +8,7 @@ import csv
 import os
 # from tkinter.constants import S
 from init_db import c #, conn
-from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5 import QtWidgets, uic, QtCore #, QtGui, 
 #from PyQt5.QtCore import QEvent, Qt
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtGui import QCursor
@@ -28,7 +28,7 @@ def result_tabs():
 
     impStrati.build_tab()
     absData.build_tab()
-    orderAbs.create_fill()
+    orderAbs.build_tab()
     resStrat.create_fill()
     resDates.create_fill()
 
@@ -41,6 +41,7 @@ class FillTables:
 
         self.gui_tab = uic.loadUi(gui_tab)
         self._nrow = 0
+        self._ncol = 0
 
     def db_select(self):
         # SQL-Befehl und Result-Set (Objekt) als return:
@@ -51,8 +52,9 @@ class FillTables:
 
     def ncol_tab(self):
         first_row = self.db_select()
-        _ncol = len(first_row[0])
-        self.gui_tab.table.setColumnCount(_ncol)
+        # sets also class variable – not really clean code:
+        self._ncol = len(first_row[0])
+        self.gui_tab.table.setColumnCount(self._ncol)
 
     def nrow_tab(self):
         # ermittelt die Anzahl der Zeilen
@@ -80,6 +82,7 @@ class FillTables:
         # Header und Sortierfunktion:
         self.gui_tab.table.setSortingEnabled(True)
         self.gui_tab.table.setHorizontalHeaderLabels(self.head_lab)
+        # //TODO: Drop down lists for ueber/unter/gleich and periods
     
     def add_tab(self):
         #from aufruf_gui_strati import mainWin
@@ -138,6 +141,7 @@ class EditTabs(FillTables):
         self.upd_rows = []
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
         self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
+        self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
 
         # right-click event on cells:
         self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -151,7 +155,6 @@ class EditTabs(FillTables):
         self.create_fill()
         self.add_row()
         self.buttons_akt_deakt(False)
-        #// FIXME: Buttons deaktivieren funktioniert bei der Tabelle mit der Reihenfolge nicht
     
     def add_row(self):
         self._nrow = self._nrow + 1
@@ -173,13 +176,12 @@ class EditTabs(FillTables):
         self.gui_tab.saveChanges.setEnabled(status)
         self.gui_tab.applyChanges.setEnabled(status)
         self.gui_tab.Reset.setEnabled(status)
-
-    #// TODO: Funktion zum Löschen von Zeilen
     
     def edit_table(self):
         self.check_last_row()
         #ausgegraute Buttons aktivieren:
         self.buttons_akt_deakt(True)
+        #//TODO: format-check for inserts
     
     def reset_changes(self):
             self.ncol_tab()
@@ -207,7 +209,46 @@ class EditTabs(FillTables):
             print(id)
             self.gui_tab.table.removeRow(id)
         self.buttons_akt_deakt(True)
+    
+    def gui_tab_to_db(self):        
+        sql_bef = 'DELETE FROM {}'.format(self.db_tab)
+        c.execute(sql_bef)
+        headers = self.db_tab_headers()
+        print(headers)
+        # -1 because the last row is always empty:
+        for row in range(self._nrow -1):
+            sql_bef = 'INSERT INTO {} ({}) VALUES ({})'.format(self.db_tab, headers, self.get_row(row))
+            print(sql_bef)
+            c.execute(sql_bef)
+        self.ncol_tab()
+        self.fill_table()
+        #self.gui_tab.saveChanges.setEnabled(status)
+        self.gui_tab.applyChanges.setEnabled(False)
+        self.gui_tab.Reset.setEnabled(False)
 
+    def get_row(self, id_zeile):
+        zeile = []
+        for spalte in range(self._ncol):
+            txt_zeile = self.gui_tab.table.item(id_zeile, spalte)
+            wert = "'" + txt_zeile.text() + "'"
+            zeile.append(wert)
+        zeile = ', '.join(zeile)
+        return(zeile)
+
+    def db_tab_headers(self):
+        headers = []
+        # for spalte in range(self._ncol):
+        #     txt_zeile = self.gui_tab.table.item(id_zeile, spalte)
+        #     wert = txt_zeile.text()
+        sql_bef = "SELECT name FROM PRAGMA_TABLE_INFO('{}')".format(self.db_tab)
+        c.execute(sql_bef)
+        rows = c.fetchall()
+        for row in rows:
+            row = row[0]
+            headers.append(row)
+        headers = ', '.join(headers)
+        return(headers)
+    
     #// TODO: Tab. in DB wenn apply
     #// TODO: Tab. in CSV wenn save
         # existiert schon für andere Tabellen – anpassen 

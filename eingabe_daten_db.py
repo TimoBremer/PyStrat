@@ -3,7 +3,7 @@
 
 import os 
 import csv
-from init_db import c, conn
+from init_db import c #, conn
 from tab_create import initial_db
 
 def eing_datenb(pfad_rohdaten, pfad_abs_daten, pfad_reihenf_abs_daten):
