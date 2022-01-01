@@ -6,10 +6,8 @@
 import sys
 import csv
 import os
-# from tkinter.constants import S
-from init_db import c #, conn
-from PyQt5 import QtWidgets, uic, QtCore #, QtGui, 
-#from PyQt5.QtCore import QEvent, Qt
+from init_db import c
+from PyQt5 import QtWidgets, uic, QtCore
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtGui import QCursor
 import os
@@ -17,7 +15,6 @@ import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
-#from PyQt5.QtCore import QPoint
 
 def result_tabs():
     impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
@@ -31,6 +28,7 @@ def result_tabs():
     orderAbs.build_tab()
     resStrat.create_fill()
     resDates.create_fill()
+#// TODO: Tabellen wenn Fehler etc.
 
 class FillTables:
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab=''):
@@ -58,7 +56,6 @@ class FillTables:
 
     def nrow_tab(self):
         # ermittelt die Anzahl der Zeilen
-        # // TODO: SELECT ROWID, *  FROM rohdaten
         sql_bef = 'SELECT COUNT(*) FROM {}'.format(self.db_tab)
         c.execute(sql_bef)
         _nrow = c.fetchone()
@@ -85,7 +82,6 @@ class FillTables:
         # //TODO: Drop down lists for ueber/unter/gleich and periods
     
     def add_tab(self):
-        #from aufruf_gui_strati import mainWin
         mainWin.tabWidget.addTab(self.gui_tab, self.gui_tab_name)
     
     def create_fill(self):
@@ -129,10 +125,6 @@ class StoreabTabs(FillTables):
             writer = csv.writer(csvfile)
             writer.writerow(self.head_lab)
             writer.writerows(sql_tab)
-
-#// TODO: Subclass zum Bearbeiten der Tabellen
-    # gibt es schon für GIS-Datenbankeditor
-    # muss allerdings stark angepasst werden
 
 class EditTabs(FillTables):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
@@ -204,9 +196,7 @@ class EditTabs(FillTables):
         ids = self.rowids_selec_rows()
         # must be in reversed order because the table rearranges the indices afte deleting the first row:
         ids = sorted(ids, reverse=True)
-        print(ids)
         for id in ids:
-            print(id)
             self.gui_tab.table.removeRow(id)
         self.buttons_akt_deakt(True)
     
@@ -214,15 +204,12 @@ class EditTabs(FillTables):
         sql_bef = 'DELETE FROM {}'.format(self.db_tab)
         c.execute(sql_bef)
         headers = self.db_tab_headers()
-        print(headers)
         # -1 because the last row is always empty:
         for row in range(self._nrow -1):
             sql_bef = 'INSERT INTO {} ({}) VALUES ({})'.format(self.db_tab, headers, self.get_row(row))
-            print(sql_bef)
             c.execute(sql_bef)
         self.ncol_tab()
         self.fill_table()
-        #self.gui_tab.saveChanges.setEnabled(status)
         self.gui_tab.applyChanges.setEnabled(False)
         self.gui_tab.Reset.setEnabled(False)
 
@@ -237,9 +224,6 @@ class EditTabs(FillTables):
 
     def db_tab_headers(self):
         headers = []
-        # for spalte in range(self._ncol):
-        #     txt_zeile = self.gui_tab.table.item(id_zeile, spalte)
-        #     wert = txt_zeile.text()
         sql_bef = "SELECT name FROM PRAGMA_TABLE_INFO('{}')".format(self.db_tab)
         c.execute(sql_bef)
         rows = c.fetchall()
@@ -248,7 +232,3 @@ class EditTabs(FillTables):
             headers.append(row)
         headers = ', '.join(headers)
         return(headers)
-    
-    #// TODO: Tab. in DB wenn apply
-    #// TODO: Tab. in CSV wenn save
-        # existiert schon für andere Tabellen – anpassen 

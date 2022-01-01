@@ -65,6 +65,7 @@ def fehlersuche():
 	c.execute('UPDATE fehlerkette set id_bez = ROWID')
 	# Ergaenzung der Fehlerkette hin:
 	anz_zeilen = 1
+	#// FIXME: in diesem SQL-Befehl ist der Wurm drin:
 	while (anz_zeilen == 0 or durchlauf < 1): 
 		durchlauf = durchlauf + 1
 		# die letzte Bedingung in Klammern verhindert Fehler derart 3=2 | 2=3:
@@ -94,6 +95,7 @@ def fehlersuche():
 		c.execute('SELECT COUNT(*) from fehlerk_ende')
 		anz_zeilen = c.fetchone()
 		anz_zeilen = anz_zeilen[0]
+	print("Fehlerkette hin")
 	fehlerkette_rueck(durchlauf)
 	
 def fehlerkette_rueck(durchlauf):

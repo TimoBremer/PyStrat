@@ -2,10 +2,6 @@
 #!/usr/bin/env python3
 
 import sys
-# from PyQt5 import QtWidgets
-# import tkinter as tk
-# from tkinter import filedialog
-# from PyQt5.QtWidgets import QDialog, QWidget
 from eingabe_daten_db import eing_datenb
 from progr_strati import programmstart
 from fill_tables import result_tabs
