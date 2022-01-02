@@ -27,7 +27,6 @@ def fehlerkontrolle():
 	
 def fehlersuche():
 	# Fehlerkette wird vom Anfang zum Ende aufgebaut und dann rückwaerts abgearbeitet
-	# c.execute('CREATE TABLE fehlerkette (id_bez INTEGER, befund1 TEXT, ueber_unter TEXT, befund2 TEXT, durchlauf INTEGER)')
 	durchlauf = 0
 	# die initiale Beziehung wird aus allen am Fehler beteiligten Befunden ausgesucht
 	# in die erste Spalte kommt im nächsten Befehl eine ID für jede Beziehung
@@ -98,8 +97,6 @@ def fehlersuche():
 		anz_zeilen = c.fetchone()
 		anz_zeilen = anz_zeilen[0]
 	fehlerkette_rueck(durchlauf)
-	# # A clear result-table to display in the gui:
-	# c.execute('CREATE VIEW "strat_conflicts" AS SELECT befund1, ueber_unter, befund2 FROM fehlerkette')
 	conn.commit
 	
 def fehlerkette_rueck(durchlauf):
