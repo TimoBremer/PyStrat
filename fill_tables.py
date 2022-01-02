@@ -17,9 +17,9 @@ from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 
 def result_tabs():
-    impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Strat. Rel.', ['left', 'relation', 'right'])
-    absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Abs. Data', ['feature', 'date/period'])
-    orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Periods Order', ['period', 'order'])
+    impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
+    absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])
+    orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Input Periods Order', ['period', 'order'])
     resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature under', 'feature above'])
     resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
     Contrad = StoreabTabs('strat_conflicts', 'gui_tab_save.ui', 'Strat. Conflicts', ['feature 1', 'relation', 'feature 2'])
@@ -32,14 +32,30 @@ def result_tabs():
     Contrad.create_fill()
 #// TODO: Tabellen wenn Fehler etc.
 
-class FillTables:
-    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab=''):
-        self.db_tab = db_tab
+class CreateTab:
+    def __init__(self, gui_tab, gui_tab_name, head_lab=''):
         self.head_lab = head_lab
         self.gui_tab = gui_tab
         self.gui_tab_name = gui_tab_name
 
         self.gui_tab = uic.loadUi(gui_tab)
+        self._nrow = 0
+        self._ncol = 0
+
+    def tune_table(self):
+        # Header und Sortierfunktion:
+        self.gui_tab.table.setSortingEnabled(True)
+        self.gui_tab.table.setHorizontalHeaderLabels(self.head_lab)
+        # //TODO: Drop down lists for ueber/unter/gleich and periods
+    
+    def add_tab(self):
+        mainWin.tabWidget.addTab(self.gui_tab, self.gui_tab_name)
+
+class FillTabDb(CreateTab):
+    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab=''):
+        CreateTab.__init__(self, gui_tab, gui_tab_name, head_lab)
+        self.db_tab = db_tab
+
         self._nrow = 0
         self._ncol = 0
 
@@ -77,15 +93,6 @@ class FillTables:
                 _ncol = _ncol +1
             _nrow = _nrow +1
     
-    def tune_table(self):
-        # Header und Sortierfunktion:
-        self.gui_tab.table.setSortingEnabled(True)
-        self.gui_tab.table.setHorizontalHeaderLabels(self.head_lab)
-        # //TODO: Drop down lists for ueber/unter/gleich and periods
-    
-    def add_tab(self):
-        mainWin.tabWidget.addTab(self.gui_tab, self.gui_tab_name)
-    
     def create_fill(self):
         self.nrow_tab()
         if self._nrow > 0:
@@ -94,9 +101,9 @@ class FillTables:
             self.fill_table()
             self.tune_table()
 
-class StoreabTabs(FillTables):
+class StoreabTabs(FillTabDb):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
-        FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
+        FillTabDb.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
         self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
     
@@ -128,9 +135,9 @@ class StoreabTabs(FillTables):
             writer.writerow(self.head_lab)
             writer.writerows(sql_tab)
 
-class EditTabs(FillTables):
+class EditTabs(FillTabDb):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
-        FillTables.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
+        FillTabDb.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
         self.upd_rows = []
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())

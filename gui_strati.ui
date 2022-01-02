@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>806</width>
-    <height>667</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -247,52 +247,19 @@
        </rect>
       </property>
      </widget>
-     <widget class="QProgressBar" name="progressBar">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>500</y>
-        <width>781</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="value">
-       <number>0</number>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="button_start">
-      <property name="geometry">
-       <rect>
-        <x>660</x>
-        <y>470</y>
-        <width>131</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Run program&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string> Start</string>
-      </property>
-      <property name="icon">
-       <iconset theme="system-run">
-        <normaloff>.</normaloff>.</iconset>
-      </property>
-     </widget>
     </widget>
    </widget>
    <widget class="QDialogButtonBox" name="abbrechen_ok">
     <property name="geometry">
      <rect>
       <x>700</x>
-      <y>570</y>
+      <y>610</y>
       <width>101</width>
       <height>25</height>
      </rect>
+    </property>
+    <property name="locale">
+     <locale language="English" country="UnitedKingdom"/>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -301,6 +268,54 @@
      <set>QDialogButtonBox::Close</set>
     </property>
    </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>580</y>
+      <width>651</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_start">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>580</y>
+      <width>131</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Run program&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string> Start</string>
+    </property>
+    <property name="icon">
+     <iconset theme="system-run">
+      <normaloff>.</normaloff>.</iconset>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -315,27 +330,17 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <widget class="QMenu" name="menuExport">
+    <widget class="QMenu" name="menuDatenimport">
      <property name="title">
-      <string>Export</string>
+      <string>Import</string>
      </property>
-     <addaction name="actionstratigrafische_Beziehungen"/>
-     <addaction name="actionErgebnis_absolute_Daten"/>
+     <addaction name="actionStratigraphic_Relations"/>
+     <addaction name="actionPeriods_Abs_Data"/>
+     <addaction name="actionPeriods_Order"/>
     </widget>
     <addaction name="actionProjekt_ffnen_2"/>
     <addaction name="actionProjekt_speichern"/>
-    <addaction name="actionLaden"/>
-    <addaction name="menuExport"/>
-   </widget>
-   <widget class="QMenu" name="menuBearbeiten">
-    <property name="title">
-     <string>Bearbeiten</string>
-    </property>
-    <addaction name="actionManuelle_Eingabe_Stratigrafie"/>
-    <addaction name="actionManuelle_Eingabe_Datierungen"/>
-    <addaction name="actionManuelle_Eingabe_Reihenfolge_Datierungen"/>
-    <addaction name="actionAusschluss_Beziehungen"/>
-    <addaction name="actionProgrammstart_2"/>
+    <addaction name="menuDatenimport"/>
    </widget>
    <widget class="QMenu" name="menuHilfe">
     <property name="title">
@@ -345,26 +350,8 @@
     <addaction name="action_ber"/>
    </widget>
    <addaction name="menuDatei"/>
-   <addaction name="menuBearbeiten"/>
    <addaction name="menuHilfe"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="windowTitle">
-    <string>toolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
-  <action name="actionLaden">
-   <property name="text">
-    <string>Datenimport</string>
-   </property>
-  </action>
   <action name="actionSpeichern">
    <property name="text">
     <string>ProjektSpeichern</string>
@@ -382,12 +369,12 @@
   </action>
   <action name="actionProjekt_speichern">
    <property name="text">
-    <string>Projekt speichern</string>
+    <string>Save Project</string>
    </property>
   </action>
   <action name="actionProjekt_ffnen_2">
    <property name="text">
-    <string>Projekt öffnen</string>
+    <string>Open Project</string>
    </property>
   </action>
   <action name="actionManuelle_Eingabe_Stratigrafie">
@@ -433,6 +420,21 @@
   <action name="actionProgrammstart_2">
    <property name="text">
     <string>Programmstart</string>
+   </property>
+  </action>
+  <action name="actionStratigraphic_Relations">
+   <property name="text">
+    <string>Stratigraphic Relations</string>
+   </property>
+  </action>
+  <action name="actionPeriods_Abs_Data">
+   <property name="text">
+    <string>Periods/Abs. Data</string>
+   </property>
+  </action>
+  <action name="actionPeriods_Order">
+   <property name="text">
+    <string>Periods Order</string>
    </property>
   </action>
  </widget>
