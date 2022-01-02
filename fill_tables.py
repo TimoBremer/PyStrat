@@ -22,12 +22,14 @@ def result_tabs():
     orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Periods Order', ['period', 'order'])
     resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature under', 'feature above'])
     resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
+    Contrad = StoreabTabs('strat_conflicts', 'gui_tab_save.ui', 'Strat. Conflicts', ['feature 1', 'relation', 'feature 2'])
 
     impStrati.build_tab()
     absData.build_tab()
     orderAbs.build_tab()
     resStrat.create_fill()
     resDates.create_fill()
+    Contrad.create_fill()
 #// TODO: Tabellen wenn Fehler etc.
 
 class FillTables:
@@ -217,7 +219,10 @@ class EditTabs(FillTables):
         zeile = []
         for spalte in range(self._ncol):
             txt_zeile = self.gui_tab.table.item(id_zeile, spalte)
-            wert = "'" + txt_zeile.text() + "'"
+            if txt_zeile is not None and txt_zeile.text() != '':
+                wert = "'" + txt_zeile.text() + "'"
+            else:
+                wert = "''"
             zeile.append(wert)
         zeile = ', '.join(zeile)
         return(zeile)
