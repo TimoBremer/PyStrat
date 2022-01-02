@@ -108,6 +108,9 @@
     <property name="text">
      <string/>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -135,17 +138,8 @@
     <property name="title">
      <string>Datei</string>
     </property>
-    <widget class="QMenu" name="menuDatenimport">
-     <property name="title">
-      <string>Import</string>
-     </property>
-     <addaction name="actionStratigraphic_Relations"/>
-     <addaction name="actionPeriods_Abs_Data"/>
-     <addaction name="actionPeriods_Order"/>
-    </widget>
     <addaction name="actionProjekt_ffnen_2"/>
     <addaction name="actionProjekt_speichern"/>
-    <addaction name="menuDatenimport"/>
    </widget>
    <widget class="QMenu" name="menuHilfe">
     <property name="title">

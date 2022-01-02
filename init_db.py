@@ -7,6 +7,6 @@ import os ## kann entfernt werden, wenn DB im RAM läuft!
 if os.path.exists('stratigrafie.sqlite'):## kann entfernt werden, wenn DB im RAM läuft!
 	os.remove('stratigrafie.sqlite') 
 
-conn = sqlite3.connect('stratigrafie.sqlite')
-#conn = sqlite3.connect(':memory:')
+#conn = sqlite3.connect('stratigrafie.sqlite')
+conn = sqlite3.connect(':memory:')
 c = conn.cursor()

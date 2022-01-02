@@ -5,7 +5,7 @@ import sys
 import os
 import tkinter as tk
 from tkinter import filedialog
-from eingabe_daten_db import eing_datenb
+#from eingabe_daten_db import eing_datenb
 from gui_windows import mainWin
 
 # muss die Pfade nach dem Ausführen in Datei speichern

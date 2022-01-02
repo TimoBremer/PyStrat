@@ -15,7 +15,7 @@ import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
-from eingabe_daten_db import type_con
+#from eingabe_daten_db import type_con
 
 
 
@@ -39,10 +39,7 @@ class CreateTab:
         self.head_lab = head_lab
         self.gui_tab = gui_tab
         self.gui_tab_name = gui_tab_name
-
         self.gui_tab = uic.loadUi(gui_tab)
-        self._nrow = 0
-        self._ncol = 0
 
     def tune_table(self):
         # Header und Sortierfunktion:
@@ -54,10 +51,9 @@ class CreateTab:
         mainWin.tabWidget.addTab(self.gui_tab, self.gui_tab_name)
 
 class FillTabDb(CreateTab):
-    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab=''):
+    def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
         CreateTab.__init__(self, gui_tab, gui_tab_name, head_lab)
         self.db_tab = db_tab
-
         self._nrow = 0
         self._ncol = 0
 
@@ -69,39 +65,30 @@ class FillTabDb(CreateTab):
         return(rows)
 
     def ncol_tab(self):
-        first_row = self.db_select()
-        # sets also class variable – not really clean code:
-        self._ncol = len(first_row[0])
+        self._ncol = len(self.head_lab)
         self.gui_tab.table.setColumnCount(self._ncol)
-
-    def nrow_tab(self):
-        # ermittelt die Anzahl der Zeilen
-        sql_bef = 'SELECT COUNT(*) FROM {}'.format(self.db_tab)
-        c.execute(sql_bef)
-        _nrow = c.fetchone()
-        self._nrow = _nrow[0]
-        self.gui_tab.table.setRowCount(self._nrow)
     
     def fill_table(self):
         sql_tab = self.db_select()
-        _nrow = 0
         for row in sql_tab:
             _ncol = 0
             for value in row:
+                self.gui_tab.table.setRowCount(self._nrow + 1)
                 value = str(value)
                 # "None" muss herausgefiltert werden, sieht sonst doof aus in Tabelle
                 if not 'None' in value:
-                    self.gui_tab.table.setItem(_nrow, _ncol, QtWidgets.QTableWidgetItem(value))
+                    self.gui_tab.table.setItem(self._nrow, _ncol, QtWidgets.QTableWidgetItem(value))
                 _ncol = _ncol +1
-            _nrow = _nrow +1
+            self._nrow = self._nrow +1     
     
     def create_fill(self):
-        self.nrow_tab()
-        if self._nrow > 0:
+        self.ncol_tab()
+        self.fill_table()
+        self.tune_table()
+        print(self._nrow)
+        if self._nrow > 1:
             self.add_tab()
-            self.ncol_tab()
-            self.fill_table()
-            self.tune_table()
+
   
 class StoreabTabs(FillTabDb):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
@@ -186,8 +173,6 @@ class EditTabs(StoreabTabs):
 
     def buttons_akt_deakt(self, status):
         self.gui_tab.saveBut.setEnabled(status)
-        self.gui_tab.applyChanges.setEnabled(status)
-        self.gui_tab.Reset.setEnabled(status)
     
     def edit_table(self):
         self.check_last_row()
