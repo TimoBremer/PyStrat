@@ -36,6 +36,7 @@ def call_prev_path(textfeld, zeile_txt_file):
 	textfeld.clear()
 	textfeld.setText(pfad)
 
+#// TODO: Funktion kann gelöscht werden, wenn altes Dateipfad-Menü wegkommt
 def aufruf_dateipfad(textfeld, zeile_txt_file):
 	parent = tk.Tk()
 	# Ask the user to select a single file name

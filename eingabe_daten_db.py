@@ -9,9 +9,9 @@ from tab_create import initial_db
 def eing_datenb(pfad_rohdaten, pfad_abs_daten, pfad_reihenf_abs_daten):
 	initial_db()
 	# in Datenbank einfügen:
-	kopiervorgang(pfad_rohdaten, "rohdaten", 3)
-	kopiervorgang(pfad_abs_daten, "rohdaten_datierung", 2)
-	kopiervorgang(pfad_reihenf_abs_daten, "reihenf_abs_dat", 2)
+	csv_to_gui(pfad_rohdaten, "rohdaten", 3)
+	csv_to_gui(pfad_abs_daten, "rohdaten_datierung", 2)
+	csv_to_gui(pfad_reihenf_abs_daten, "reihenf_abs_dat", 2)
 
 def type_con(csv_str):
 	csv_str = csv_str.strip(' ')
@@ -19,7 +19,8 @@ def type_con(csv_str):
 		csv_str = "'{}'".format(csv_str)
 	return(csv_str)
 
-def kopiervorgang(pfad, tabelle, anz_spalten):
+#// TODO: csv_to_gui anpassen
+def csv_to_gui(pfad, tabelle, anz_spalten):
 	# Kontrolle, ob es Datei gibt:
 	isFile = os.path.isfile(pfad)
 	if isFile==True:

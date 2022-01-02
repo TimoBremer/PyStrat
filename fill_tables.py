@@ -15,6 +15,7 @@ import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
+from eingabe_daten_db import csv_to_gui
 
 def result_tabs():
     impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
@@ -100,18 +101,15 @@ class FillTabDb(CreateTab):
             self.ncol_tab()
             self.fill_table()
             self.tune_table()
-
-class FillTabCsv(CreateTab):
-    def __init__(self, gui_tab, gui_tab_name, head_lab=''):
-        CreateTab.__init__(self, gui_tab, gui_tab_name, head_lab)
-    
+  
 class StoreabTabs(FillTabDb):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
         FillTabDb.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
 
-        self.gui_tab.saveRes.clicked.connect(lambda:self.write_csv())
+        self.gui_tab.saveBut.clicked.connect(lambda:self.write_csv())
     
     #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
+    #// FIXME: geht diese Funktion wirklich in diese Klasse?
     def file_dialog(self):
         initialdir = get_prev_path('prev_dir_storage' ,1)
         parent = tk.Tk()
@@ -139,16 +137,16 @@ class StoreabTabs(FillTabDb):
             writer.writerow(self.head_lab)
             writer.writerows(sql_tab)
 
-class EditTabs(FillTabCsv):
+class EditTabs(StoreabTabs):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
-        FillTabCsv.__init__(self, gui_tab, gui_tab_name, head_lab)
-
+        StoreabTabs.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
         self.upd_rows = []
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
-        self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
+        #self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
+        self.gui_tab.Import.clicked.connect(lambda:self.import_csv())
         self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
 
-        self.db_tab = db_tab
+        #self.db_tab = db_tab
         # right-click event on cells:
         self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.gui_tab.table.customContextMenuRequested.connect(self.right_click)
@@ -162,6 +160,7 @@ class EditTabs(FillTabCsv):
         self.add_tab()
         self.ncol_tab()
         self.tune_table()
+        self.import_csv()
         self.add_row()
         self.buttons_akt_deakt(False)
     
@@ -186,7 +185,7 @@ class EditTabs(FillTabCsv):
             self.add_row()
 
     def buttons_akt_deakt(self, status):
-        self.gui_tab.saveChanges.setEnabled(status)
+        self.gui_tab.saveBut.setEnabled(status)
         self.gui_tab.applyChanges.setEnabled(status)
         self.gui_tab.Reset.setEnabled(status)
     
@@ -196,11 +195,11 @@ class EditTabs(FillTabCsv):
         self.buttons_akt_deakt(True)
         #//TODO: format-check for inserts
     
-    def reset_changes(self):
-            self.ncol_tab()
-            self.fill_table()
-            self.tune_table()
-            self.buttons_akt_deakt(False)
+    # def reset_changes(self):
+    #         self.ncol_tab()
+    #         self.fill_table()
+    #         self.tune_table()
+    #         self.buttons_akt_deakt(False)
     
     def right_click(self, event):
         menu = QMenu()
@@ -221,6 +220,11 @@ class EditTabs(FillTabCsv):
             self.gui_tab.table.removeRow(id)
         self.buttons_akt_deakt(True)
     
+    def import_csv(self):
+        csv_path = self.file_dialog_imp()
+        csv_to_gui(csv_path, self.db_tab, len(self.head_lab))
+
+    #// TODO: Kopiervorgang anpassen
     def gui_tab_to_db(self):        
         sql_bef = 'DELETE FROM {}'.format(self.db_tab)
         c.execute(sql_bef)
@@ -256,3 +260,17 @@ class EditTabs(FillTabCsv):
             headers.append(row)
         headers = ', '.join(headers)
         return(headers)
+
+    def file_dialog_imp(self):
+        initialdir = get_prev_path('prev_dir_storage' ,1)
+        file_types = [('Textdateien', '*.csv *.txt'), ('All files', '*')]
+        parent = tk.Tk()
+        # Ask the user to select a single file name
+        if initialdir == False:
+            path = filedialog.askopenfilename(title='Select a file', filetypes=file_types)
+        else:
+            path = filedialog.askopenfilename(title='Select a file', initialdir = initialdir, filetypes=file_types)
+        parent.destroy()
+        print(path)
+        self.save_prev_dir(path)
+        return(path)

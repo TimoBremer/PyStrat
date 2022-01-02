@@ -31,7 +31,7 @@
    <row/>
    <column/>
   </widget>
-  <widget class="QPushButton" name="saveRes">
+  <widget class="QPushButton" name="saveBut">
    <property name="geometry">
     <rect>
      <x>670</x>
