@@ -6,6 +6,10 @@ from fehlerbeh import fehlerkontrolle, fehlersuche, check_initalf_rohdat
 from tab_create import create_ergeb
 from gui_windows import mainWin
 
+# def del_db_tabs(tab_list=[]):
+# 	sql_bef = 'DROP TABLE IF EXISTS {}'.format(tab_list)
+#     c.execute(sql_bef)
+
 # Wenn kein Fehler Auftritt wird Ergänzung der Werte durchgefuehrt,
 # ...bis Anzahl der Zeilen konstant ist:
 ## ...zuerst Definition der Funktion:
@@ -42,7 +46,7 @@ def ergaenzungsschleife(tabelle, anw_fehlerkontrolle):
 def programmkern():
 	# in Basistabelle gleich werden "Gegenwerte" eingetragen, z.B. 3=5, 5=3     
 	mainWin.anzeige_arbeitsschritt.setText('Programm gestartet')
-	c.execute('CREATE TABLE IF NOT EXISTS gleich (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))')
+	c.execute('CREATE TABLE gleich (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))')
 	c.execute('''INSERT OR IGNORE into
 			gleich (w1, w2)
 		select
@@ -69,7 +73,7 @@ def programmkern():
 	
 	## die Folgenden SQL-Befehle dienen im Grunde dazu, eine fortlaufende ID zu erstellen, was schwierig ist, da ältere SQlite-Versionen keine row_count Fensterfunktion haben
 	# Zuweisung von Ids zu gruppierten Gleich-Werten, wobei alle gleichgesetzten Befunde eine ID bekommen:
-	c.execute('CREATE TABLE IF NOT EXISTS ids_gruppen_gleich (id INTEGER PRIMARY KEY, _w2)')
+	c.execute('CREATE TABLE ids_gruppen_gleich (id INTEGER PRIMARY KEY, _w2)')
 	c.execute('''INSERT OR IGNORE into
 		ids_gruppen_gleich (_w2)
 		SELECT DISTINCT
@@ -85,7 +89,7 @@ def programmkern():
 			w1
 		)''')     
 	# Zuweisung von IDs zu allen Befunden, gleich und ueber_unter:
-	c.execute('CREATE TABLE IF NOT EXISTS ids_gesamt (befund, id INTEGER, UNIQUE(befund))')
+	c.execute('CREATE TABLE ids_gesamt (befund, id INTEGER, UNIQUE(befund))')
 	c.execute('''INSERT OR IGNORE into
 		ids_gesamt (befund, id)
 		select
@@ -122,7 +126,7 @@ def programmkern():
 			ueber_unter = "gleich"''')     
 	c.execute('UPDATE ids_gesamt SET id = (SELECT coalesce(max(id),1) FROM ids_gruppen_gleich) + rowid WHERE id = 0')
 	# Aufbereitung der Rohdaten gleich und Befuellung der Tabelle:
-	c.execute('CREATE TABLE IF NOT EXISTS "ueber_unter" (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))')
+	c.execute('CREATE TABLE "ueber_unter" (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))')
 	c.execute('''INSERT OR IGNORE into
 		ueber_unter (w1, w2)
 		select
@@ -160,6 +164,7 @@ def programmkern():
 	mainWin.progressBar.setValue(100)
 
 def programmstart():
+	#// FIXME: dieser Initalfehler-Check müsste doch eigentlich bei kurzen Fehlerketten anschlagen?
 	if check_initalf_rohdat()==True:
 		print('Abbruch: Widerspruch in eingegeben Daten derart "Befund 1 über Befund 1" gefunden')	
 	else:

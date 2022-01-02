@@ -2,13 +2,14 @@
 #!/usr/bin/env python3
 
 import sys
-from eingabe_daten_db import eing_datenb
-from progr_strati import programmstart
+#from eingabe_daten_db import eing_datenb
+from progr_strati import programmstart #, del_db_tabs
 from fill_tables import result_tabs
 from dateipfade import *
 from gui_windows import app, mainWin
 
 def steuerung_progr():
+	# del_db_tabs()
 	pfade_auslesen()
 	programmstart()
 	result_tabs()
