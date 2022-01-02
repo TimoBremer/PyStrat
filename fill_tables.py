@@ -17,17 +17,18 @@ from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 from eingabe_daten_db import type_con
 
+
+
+def init_tabs():
+    impStrati.build_tab()
+    absData.build_tab()
+    orderAbs.build_tab()
+
 def result_tabs():
-    impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
-    absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])
-    orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Input Periods Order', ['period', 'order'])
     resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature under', 'feature above'])
     resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
     Contrad = StoreabTabs('strat_conflicts', 'gui_tab_save.ui', 'Strat. Conflicts', ['feature 1', 'relation', 'feature 2'])
 
-    impStrati.build_tab()
-    absData.build_tab()
-    orderAbs.build_tab()
     resStrat.create_fill()
     resDates.create_fill()
     Contrad.create_fill()
@@ -146,7 +147,6 @@ class EditTabs(StoreabTabs):
         self.gui_tab.Import.clicked.connect(lambda:self.import_csv())
         #self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
 
-        #self.db_tab = db_tab
         # right-click event on cells:
         self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.gui_tab.table.customContextMenuRequested.connect(self.right_click)
@@ -225,8 +225,8 @@ class EditTabs(StoreabTabs):
             c.execute(sql_bef)
         self.ncol_tab()
         self.fill_table()
-        self.gui_tab.applyChanges.setEnabled(False)
-        self.gui_tab.Reset.setEnabled(False)
+        #self.gui_tab.applyChanges.setEnabled(False)
+        #self.gui_tab.Reset.setEnabled(False)
 
     def get_row(self, id_zeile):
         zeile = []
@@ -280,3 +280,7 @@ class EditTabs(StoreabTabs):
                         self.gui_tab.table.setItem(_nrow, i, QtWidgets.QTableWidgetItem(row[i]))
                     _nrow = _nrow + 1
                     self.gui_tab.table.setRowCount(_nrow +1)
+
+impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
+absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])
+orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Input Periods Order', ['period', 'order'])

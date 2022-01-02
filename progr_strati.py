@@ -2,13 +2,9 @@
 #!/usr/bin/env python3
 
 from init_db import c, conn
-from fehlerbeh import fehlerkontrolle, fehlersuche, check_initalf_rohdat
+from fehlerbeh import fehlerkontrolle, check_initalf_rohdat
 from tab_create import create_ergeb
 from gui_windows import mainWin
-
-# def del_db_tabs(tab_list=[]):
-# 	sql_bef = 'DROP TABLE IF EXISTS {}'.format(tab_list)
-#     c.execute(sql_bef)
 
 # Wenn kein Fehler Auftritt wird Ergänzung der Werte durchgefuehrt,
 # ...bis Anzahl der Zeilen konstant ist:
@@ -66,7 +62,6 @@ def programmkern():
 			ueber_unter = "gleich"''')     
 	mainWin.anzeige_arbeitsschritt.setText('Gleich-Werte werden ergänzt')	
 	mainWin.progressBar.setValue(25)
-	print('Gleich-Werte werden ergänzt')
 	## ...erster Aufruf der Funktion:
 	ergaenzungsschleife('gleich', False)
 	mainWin.progressBar.setValue(50)
@@ -154,8 +149,7 @@ def programmkern():
 		LEFT join
 			ids_gesamt "w2"
 		ON
-			rohdaten.befund2 = w2.befund''')     
-	# test
+			rohdaten.befund2 = w2.befund''')
 	mainWin.anzeige_arbeitsschritt.setText('Über-Unter-Werte werden ergänzt')
 	mainWin.progressBar.setValue(75)
 	# Ergaenzen ueber_unter:
