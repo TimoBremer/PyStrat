@@ -3,7 +3,7 @@
 # Möglichkeit zum Kopieren/Download
 # Reiter für Fehler etc. erscheinen erst, wenn nötig
 
-import sys
+#import sys
 import csv
 import os
 from init_db import c
@@ -15,7 +15,7 @@ import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
-from eingabe_daten_db import csv_to_gui
+from eingabe_daten_db import type_con
 
 def result_tabs():
     impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
@@ -144,7 +144,7 @@ class EditTabs(StoreabTabs):
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
         #self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
         self.gui_tab.Import.clicked.connect(lambda:self.import_csv())
-        self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
+        #self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
 
         #self.db_tab = db_tab
         # right-click event on cells:
@@ -160,7 +160,7 @@ class EditTabs(StoreabTabs):
         self.add_tab()
         self.ncol_tab()
         self.tune_table()
-        self.import_csv()
+        #self.import_csv()
         self.add_row()
         self.buttons_akt_deakt(False)
     
@@ -195,12 +195,6 @@ class EditTabs(StoreabTabs):
         self.buttons_akt_deakt(True)
         #//TODO: format-check for inserts
     
-    # def reset_changes(self):
-    #         self.ncol_tab()
-    #         self.fill_table()
-    #         self.tune_table()
-    #         self.buttons_akt_deakt(False)
-    
     def right_click(self, event):
         menu = QMenu()
         menu.addAction('skip')
@@ -219,10 +213,6 @@ class EditTabs(StoreabTabs):
         for id in ids:
             self.gui_tab.table.removeRow(id)
         self.buttons_akt_deakt(True)
-    
-    def import_csv(self):
-        csv_path = self.file_dialog_imp()
-        csv_to_gui(csv_path, self.db_tab, len(self.head_lab))
 
     #// TODO: Kopiervorgang anpassen
     def gui_tab_to_db(self):        
@@ -274,3 +264,19 @@ class EditTabs(StoreabTabs):
         print(path)
         self.save_prev_dir(path)
         return(path)
+    
+    def import_csv(self):
+        path = self.file_dialog_imp()
+        _ncol = len(self.head_lab)
+        _nrow = 0
+        # Kontrolle, ob es Datei gibt:
+        isFile = os.path.isfile(path)
+        if isFile==True:
+            #Einfügen Daten:
+            with open(path) as csvfile:
+                reader = csv.reader(csvfile, delimiter=',') # no header information with delimiter
+                for row in reader:
+                    for i in range(_ncol):
+                        self.gui_tab.table.setItem(_nrow, i, QtWidgets.QTableWidgetItem(row[i]))
+                    _nrow = _nrow + 1
+                    self.gui_tab.table.setRowCount(_nrow +1)

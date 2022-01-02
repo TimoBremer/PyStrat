@@ -37,3 +37,17 @@ def csv_to_gui(pfad, tabelle, anz_spalten):
 				else:
 					sql_bef = 'INSERT INTO {} VALUES ({},{})'.format(tabelle, r0, r1)
 				c.execute(sql_bef)
+
+
+# def fill_table(self):
+# 	sql_tab = self.db_select()
+# 	_nrow = 0
+# 	for row in sql_tab:
+# 		_ncol = 0
+# 		for value in row:
+# 			value = str(value)
+# 			# "None" muss herausgefiltert werden, sieht sonst doof aus in Tabelle
+# 			if not 'None' in value:
+# 				self.gui_tab.table.setItem(_nrow, _ncol, QtWidgets.QTableWidgetItem(value))
+# 			_ncol = _ncol +1
+# 		_nrow = _nrow +1
