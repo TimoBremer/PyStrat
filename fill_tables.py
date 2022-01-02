@@ -215,22 +215,21 @@ class EditTabs(StoreabTabs):
         self.buttons_akt_deakt(True)
 
     #// TODO: Kopiervorgang anpassen
-    def gui_tab_to_db(self):        
+    def gui_tab_to_db(self):  
         sql_bef = 'DELETE FROM {}'.format(self.db_tab)
         c.execute(sql_bef)
         headers = self.db_tab_headers()
         # -1 because the last row is always empty:
-        for row in range(self._nrow -1):
+        for row in range(self._nrow):
             sql_bef = 'INSERT INTO {} ({}) VALUES ({})'.format(self.db_tab, headers, self.get_row(row))
             c.execute(sql_bef)
-        self.ncol_tab()
-        self.fill_table()
-        #self.gui_tab.applyChanges.setEnabled(False)
-        #self.gui_tab.Reset.setEnabled(False)
+        #self.ncol_tab()
+        #self.fill_table()
 
     def get_row(self, id_zeile):
         zeile = []
-        for spalte in range(self._ncol):
+        _ncol = len(self.head_lab)
+        for spalte in range(_ncol):
             txt_zeile = self.gui_tab.table.item(id_zeile, spalte)
             if txt_zeile is not None and txt_zeile.text() != '':
                 wert = "'" + txt_zeile.text() + "'"
@@ -268,7 +267,7 @@ class EditTabs(StoreabTabs):
     def import_csv(self):
         path = self.file_dialog_imp()
         _ncol = len(self.head_lab)
-        _nrow = 0
+        self._nrow = 0 # reset nrow
         # Kontrolle, ob es Datei gibt:
         isFile = os.path.isfile(path)
         if isFile==True:
@@ -277,9 +276,9 @@ class EditTabs(StoreabTabs):
                 reader = csv.reader(csvfile, delimiter=',') # no header information with delimiter
                 for row in reader:
                     for i in range(_ncol):
-                        self.gui_tab.table.setItem(_nrow, i, QtWidgets.QTableWidgetItem(row[i]))
-                    _nrow = _nrow + 1
-                    self.gui_tab.table.setRowCount(_nrow +1)
+                        self.gui_tab.table.setItem(self._nrow, i, QtWidgets.QTableWidgetItem(row[i]))
+                    self._nrow = self._nrow + 1
+                    self.gui_tab.table.setRowCount(self._nrow +1)
 
 impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
 absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])

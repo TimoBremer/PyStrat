@@ -21,15 +21,6 @@ mainWin.show()
 init_tabs()
 # it's a trick because it is impossible to create an empty tabWidget in QtCreator:
 mainWin.tabWidget.removeTab(0)
-# Eingabe vorherige Dateipfade:
-# mainWin.tab_pfad_rohdat_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_rohdaten, 1))
-# mainWin.tab_pfad_abs_dat_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_abs_daten, 2))
-# mainWin.tab_pfad_reihenf_last.clicked.connect(lambda: call_prev_path(mainWin.dateipfad_reihenf_abs_daten, 3))
-
-# Eingabe Dateipfade mittels Dialog:
-# mainWin.ausw_dateipfad_rohdaten.clicked.connect(lambda: aufruf_dateipfad(mainWin.dateipfad_rohdaten, 1))
-# mainWin.ausw_dateipfad_abs_daten.clicked.connect(lambda: aufruf_dateipfad(mainWin.dateipfad_abs_daten, 2))
-# mainWin.ausw_dateipfad_reihenf_abs_daten.clicked.connect(lambda: aufruf_dateipfad(mainWin.dateipfad_reihenf_abs_daten, 3))
 
 mainWin.button_start.clicked.connect(lambda: steuerung_progr())
 
