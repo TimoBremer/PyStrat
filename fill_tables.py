@@ -101,6 +101,10 @@ class FillTabDb(CreateTab):
             self.fill_table()
             self.tune_table()
 
+class FillTabCsv(CreateTab):
+    def __init__(self, gui_tab, gui_tab_name, head_lab=''):
+        CreateTab.__init__(self, gui_tab, gui_tab_name, head_lab)
+    
 class StoreabTabs(FillTabDb):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
         FillTabDb.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
@@ -135,15 +139,16 @@ class StoreabTabs(FillTabDb):
             writer.writerow(self.head_lab)
             writer.writerows(sql_tab)
 
-class EditTabs(FillTabDb):
+class EditTabs(FillTabCsv):
     def __init__(self, db_tab, gui_tab, gui_tab_name, head_lab):
-        FillTabDb.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
+        FillTabCsv.__init__(self, gui_tab, gui_tab_name, head_lab)
 
         self.upd_rows = []
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
         self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
         self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
 
+        self.db_tab = db_tab
         # right-click event on cells:
         self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.gui_tab.table.customContextMenuRequested.connect(self.right_click)
@@ -153,9 +158,16 @@ class EditTabs(FillTabDb):
         self.header.customContextMenuRequested.connect(self.right_click)
 
     def build_tab(self):
-        self.create_fill()
+        #self.create_fill()
+        self.add_tab()
+        self.ncol_tab()
+        self.tune_table()
         self.add_row()
         self.buttons_akt_deakt(False)
+    
+    def ncol_tab(self):
+        self._ncol = len(self.head_lab)
+        self.gui_tab.table.setColumnCount(self._ncol)
     
     def add_row(self):
         self._nrow = self._nrow + 1
