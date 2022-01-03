@@ -15,9 +15,6 @@ import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
-#from eingabe_daten_db import type_con
-
-
 
 def init_tabs():
     impStrati.build_tab()

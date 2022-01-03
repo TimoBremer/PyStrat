@@ -9,7 +9,7 @@ from gui_windows import app, mainWin
 from tab_create import initial_db
 
 def steuerung_progr():
-	# Create db and tables:
+	# Create tables:
 	initial_db()
 	# Create gui-tables:
 	impStrati.gui_tab_to_db()
