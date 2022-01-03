@@ -25,7 +25,7 @@ def init_tabs():
     orderAbs.build_tab()
 
 def result_tabs():
-    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature under', 'feature above'])
+    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature above', 'feature under'])
     resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
     Contrad = StoreabTabs('strat_conflicts', 'gui_tab_save.ui', 'Strat. Conflicts', ['feature 1', 'relation', 'feature 2'])
 

@@ -9,8 +9,9 @@ from gui_windows import app, mainWin
 from tab_create import initial_db
 
 def steuerung_progr():
-	#// TODO: hier müssen die to DB-Sachen hin:
+	# Create db and tables:
 	initial_db()
+	# Create gui-tables:
 	impStrati.gui_tab_to_db()
 	absData.gui_tab_to_db()
 	orderAbs.gui_tab_to_db()

@@ -8,8 +8,9 @@ def check_initalf_rohdat():
 	anz_fehler = c.fetchone()
 	anz_fehler = anz_fehler [0]
 	if anz_fehler > 0:
-		c.execute('CREATE TABLE fehlerkette (befund1 TEXT, ueber_unter TEXT, befund2 TEXT)')
-		c.execute('INSERT into fehlerkette select * from initalf_rohdat')
+		#c.execute('CREATE TABLE fehlerkette (befund1 TEXT, ueber_unter TEXT, befund2 TEXT)')
+		# //FIXME: hier ist der Wurm in der Fehlerkette drin:
+		c.execute('INSERT into fehlerkette (befund1, ueber_unter, befund2) select * from initalf_rohdat')
 		return True
 	else:
 		return False
@@ -180,4 +181,3 @@ def fehlerkette_rueck(durchlauf):
 					AND
 					fehlerkette.durchlauf = fehlerkette2.durchlauf
 				)''', (i, i, i,))
-	
