@@ -48,7 +48,7 @@ def programmkern():
 			befund1,
 			befund2
 		FROM
-			rohdaten_gef
+			rohdaten
 		where
 			ueber_unter = 'gleich'
 		union
@@ -56,7 +56,7 @@ def programmkern():
 			befund2,
 			befund1
 		FROM
-			rohdaten_gef
+			rohdaten
 		where
 			ueber_unter = "gleich"''')     
 	mainWin.anzeige_arbeitsschritt.setText('Gleich-Werte werden ergänzt')	
@@ -105,7 +105,7 @@ def programmkern():
 			befund1, 
 			0
 		FROM
-			rohdaten_gef
+			rohdaten
 		where not
 			ueber_unter = 'gleich'
 		UNION ALL
@@ -113,7 +113,7 @@ def programmkern():
 			befund2, 
 			0
 		FROM
-			rohdaten_gef
+			rohdaten
 		where not
 			ueber_unter = "gleich"''')     
 	c.execute('UPDATE ids_gesamt SET id = (SELECT coalesce(max(id),1) FROM ids_gruppen_gleich) + rowid WHERE id = 0')
@@ -127,14 +127,14 @@ def programmkern():
 		SELECT 
 			befund1, befund2
 		from
-			rohdaten_gef
+			rohdaten
 		where
 			ueber_unter = 'ueber'
 		UNION ALL
 		SELECT 
 			befund2, befund1
 		from
-			rohdaten_gef
+			rohdaten
 		where
 			ueber_unter = 'unter'
 		) "rohdaten"

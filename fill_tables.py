@@ -93,8 +93,7 @@ class StoreabTabs(FillTabDb):
 
         self.gui_tab.saveBut.clicked.connect(lambda:self.write_csv())
     
-    #// FIXME: das doppelt sich stark mit den Funktionen in dateipfade.py, kann man sicher vereinfachen
-    #// FIXME: geht diese Funktion wirklich in diese Klasse?
+    #//TODO: geht diese Funktion wirklich in diese Klasse?
     def file_dialog(self):
         initialdir = get_prev_path('prev_dir_storage' ,1)
         parent = tk.Tk()
