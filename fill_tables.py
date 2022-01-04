@@ -3,7 +3,6 @@
 # Möglichkeit zum Kopieren/Download
 # Reiter für Fehler etc. erscheinen erst, wenn nötig
 
-#import sys
 import csv
 import os
 from init_db import c
@@ -17,9 +16,21 @@ from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 
 def init_tabs():
+    global impStrati
+    global absData
+    global orderAbs
+    impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
+    absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])
+    orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Input Periods Order', ['period', 'order'])
+
     impStrati.build_tab()
     absData.build_tab()
     orderAbs.build_tab()
+
+def fill_gui():
+    impStrati.gui_tab_to_db()
+    absData.gui_tab_to_db()
+    orderAbs.gui_tab_to_db()
 
 def result_tabs():
     resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature above', 'feature under'])
@@ -126,9 +137,7 @@ class EditTabs(StoreabTabs):
         StoreabTabs.__init__(self, db_tab, gui_tab, gui_tab_name, head_lab)
         self.upd_rows = []
         self.gui_tab.table.cellChanged.connect(lambda:self.edit_table())
-        #self.gui_tab.Reset.clicked.connect(lambda:self.reset_changes())
         self.gui_tab.Import.clicked.connect(lambda:self.import_csv())
-        #self.gui_tab.applyChanges.clicked.connect(lambda:self.gui_tab_to_db())
 
         # right-click event on cells:
         self.gui_tab.table.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
@@ -139,11 +148,9 @@ class EditTabs(StoreabTabs):
         self.header.customContextMenuRequested.connect(self.right_click)
 
     def build_tab(self):
-        #self.create_fill()
         self.add_tab()
         self.ncol_tab()
         self.tune_table()
-        #self.import_csv()
         self.add_row()
         self.buttons_akt_deakt(False)
     
@@ -204,8 +211,6 @@ class EditTabs(StoreabTabs):
         for row in range(self._nrow):
             sql_bef = 'INSERT INTO {} ({}) VALUES ({})'.format(self.db_tab, headers, self.get_row(row))
             c.execute(sql_bef)
-        #self.ncol_tab()
-        #self.fill_table()
 
     def get_row(self, id_zeile):
         zeile = []
@@ -260,7 +265,3 @@ class EditTabs(StoreabTabs):
                         self.gui_tab.table.setItem(self._nrow, i, QtWidgets.QTableWidgetItem(row[i]))
                     self._nrow = self._nrow + 1
                     self.gui_tab.table.setRowCount(self._nrow +1)
-
-impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
-absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])
-orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Input Periods Order', ['period', 'order'])
