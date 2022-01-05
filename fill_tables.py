@@ -15,13 +15,16 @@ from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin
 
+gui_tab_save = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_save.ui'
+gui_tab_apply = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_apply.ui'
+
 def init_tabs():
     global impStrati
     global absData
     global orderAbs
-    impStrati = EditTabs('rohdaten', 'gui_tab_apply.ui', 'Input Strat. Rel.', ['left', 'relation', 'right'])
-    absData = EditTabs('rohdaten_datierung', 'gui_tab_apply.ui', 'Input Abs. Data', ['feature', 'date/period'])
-    orderAbs = EditTabs('reihenf_abs_dat', 'gui_tab_apply.ui', 'Input Periods Order', ['period', 'order'])
+    impStrati = EditTabs('rohdaten', gui_tab_apply, 'Input Strat. Rel.', ['left', 'relation', 'right'])
+    absData = EditTabs('rohdaten_datierung', gui_tab_apply, 'Input Abs. Data', ['feature', 'date/period'])
+    orderAbs = EditTabs('reihenf_abs_dat', gui_tab_apply, 'Input Periods Order', ['period', 'order'])
 
     impStrati.build_tab()
     absData.build_tab()
@@ -33,13 +36,15 @@ def fill_gui():
     orderAbs.gui_tab_to_db()
 
 def result_tabs():
-    resStrat = StoreabTabs('ergebnis_strati_bef', 'gui_tab_save.ui', 'Strat. Res.', ['feature above', 'feature under'])
-    resDates = StoreabTabs('ergebnis_abs_daten', 'gui_tab_save.ui', 'Dating', ['feature', 'from', 'till'])
-    Contrad = StoreabTabs('strat_conflicts', 'gui_tab_save.ui', 'Strat. Conflicts', ['feature 1', 'relation', 'feature 2'])
+    resStrat = StoreabTabs('ergebnis_strati_bef', gui_tab_save, 'Strat. Res.', ['feature above', 'feature under'])
+    resDates = StoreabTabs('ergebnis_abs_daten', gui_tab_save, 'Dating', ['feature', 'from', 'till'])
+    Contrad = StoreabTabs('strat_conflicts', gui_tab_save, 'Strat. Conflicts', ['feature 1', 'relation', 'feature 2'])
+    conDates = StoreabTabs('widerspr_strati_abs_daten', gui_tab_save, 'Dat. Conflicts', ['feature 1', 'date 1', 'conflict', 'feature 2', 'date 2'])
 
     resStrat.create_fill()
     resDates.create_fill()
     Contrad.create_fill()
+    conDates.create_fill()
 #// TODO: Tabellen wenn Fehler etc.
 
 class CreateTab:

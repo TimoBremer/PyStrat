@@ -15,9 +15,6 @@ def steuerung_progr():
 	initial_db()
 	# Create gui-tables:
 	fill_gui()
-	# impStrati.gui_tab_to_db()
-	# absData.gui_tab_to_db()
-	# orderAbs.gui_tab_to_db()
 	programmstart()
 	# cuts the 4th tab 5 times to make sure, no result tab is left:
 	# ...a bit complicated, because I found no way to remove the tabs by their name

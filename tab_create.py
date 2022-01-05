@@ -12,7 +12,6 @@ def initial_db():
 	c.execute('CREATE TABLE reihenf_abs_dat (datierung TEXT UNIQUE, reihenfolge INTEGER UNIQUE)')
 	c.execute('CREATE TABLE gleich (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))')
 	c.execute('CREATE TABLE ids_gruppen_gleich (id INTEGER PRIMARY KEY, _w2)')
-	#c.execute('CREATE TABLE ausschluss_rohdaten (befund1, ueber_unter TEXT, befund2)')   
 	#// FIXME: Subphasen stimmt wahrscheinlich irgendetwas nicht mit!
 	c.execute('CREATE TABLE vorschl_subphasen(befund, datierung, schichten_darueber, schichten_darunter, subphase)')
 	c.execute('CREATE TABLE ueber_unter (w1, w2, durchlauf INTEGER DEFAULT 0, UNIQUE(w1, w2))') 
@@ -133,23 +132,6 @@ def initial_db():
 			reihenf_abs_dat
 		ON
 			reihenf_abs_dat.datierung = reihenf_abs_dat.datierung''')
-	# c.execute('''CREATE VIEW IF NOT EXISTS  rohdaten as
-	# select * from 
-	# 	rohdaten
-	# where not ROWID in
-	# 	(
-	# 	select 
-	# 		rohdaten.ROWID
-	# 	from 
-	# 		rohdaten,
-	# 		ausschluss_rohdaten
-	# 	WHERE 
-	# 		rohdaten.befund1 = ausschluss_rohdaten.befund1
-	# 	AND
-	# 		rohdaten.ueber_unter = ausschluss_rohdaten.ueber_unter
-	# 	AND
-	# 		rohdaten.befund2 = ausschluss_rohdaten.befund2
-	# 	)''')
 	c.execute('''CREATE VIEW IF NOT EXISTS  rohdaten_geordnet AS
 	select
 		befund1,
