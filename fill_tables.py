@@ -6,17 +6,20 @@
 import csv
 import os
 from init_db import c
-from PyQt5 import QtWidgets, uic, QtCore
+from PyQt5 import QtWidgets, QtCore, uic
 from PyQt5.QtWidgets import QMenu
 from PyQt5.QtGui import QCursor
 import os
 import tkinter as tk
 from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
-from gui_windows import mainWin
+from gui_windows import mainWin, gui_tab_save, gui_tab_apply
 
-gui_tab_save = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_save.ui'
-gui_tab_apply = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_apply.ui'
+# gui_tab_save = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_save.ui'
+# gui_tab_apply = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_apply.ui'
+
+# gui_tab_save = 'gui_tab_save.ui'
+# gui_tab_apply = 'gui_tab_apply.ui'
 
 def init_tabs():
     global impStrati

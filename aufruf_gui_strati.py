@@ -3,7 +3,7 @@
 
 import sys
 from progr_strati import programmstart
-from fill_tables import init_tabs, result_tabs, fill_gui #, impStrati, absData, orderAbs
+from fill_tables import init_tabs, result_tabs, fill_gui
 from gui_windows import app, mainWin
 from tab_create import initial_db
 
