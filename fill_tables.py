@@ -15,12 +15,6 @@ from tkinter import filedialog
 from dateipfade import save_previous_paths, get_prev_path
 from gui_windows import mainWin, gui_tab_save, gui_tab_apply
 
-# gui_tab_save = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_save.ui'
-# gui_tab_apply = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\gui_tab_apply.ui'
-
-# gui_tab_save = 'gui_tab_save.ui'
-# gui_tab_apply = 'gui_tab_apply.ui'
-
 def init_tabs():
     global impStrati
     global absData
@@ -101,7 +95,6 @@ class FillTabDb(CreateTab):
         self.ncol_tab()
         self.fill_table()
         self.tune_table()
-        print(self._nrow)
         if self._nrow > 1:
             self.add_tab()
 
@@ -166,6 +159,7 @@ class EditTabs(StoreabTabs):
         self._ncol = len(self.head_lab)
         self.gui_tab.table.setColumnCount(self._ncol)
     
+    #// FIXME: another row must be entered, when the last row is edited
     def add_row(self):
         self._nrow = self._nrow + 1
         self.gui_tab.table.setRowCount(self._nrow)
@@ -254,7 +248,6 @@ class EditTabs(StoreabTabs):
         else:
             path = filedialog.askopenfilename(title='Select a file', initialdir = initialdir, filetypes=file_types)
         parent.destroy()
-        print(path)
         self.save_prev_dir(path)
         return(path)
     

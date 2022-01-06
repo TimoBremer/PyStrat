@@ -4,15 +4,17 @@
 import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication
+from pathlib import Path
 
 app = QApplication(sys.argv)
 
-# abs. path for windows pyinstaller:
-# path = r'C:\Users\timob\OneDrive\Desktop\22_01_05_strati_progr\'
+# abs. path to current working directory for all operating sys.:
+def get_pass(_dir):
+    _cur_dir = Path.cwd()
+    path = Path(_cur_dir, _dir)
+    print(path)
+    return(path)
 
-# else:
-path = ''
-
-mainWin = uic.loadUi(path + 'gui_strati.ui')
-gui_tab_save = path + 'gui_tab_save.ui'
-gui_tab_apply = path + 'gui_tab_apply.ui'
+mainWin = uic.loadUi(get_pass('gui_strati.ui'))
+gui_tab_save = get_pass('gui_tab_save.ui')
+gui_tab_apply = get_pass('gui_tab_apply.ui')
