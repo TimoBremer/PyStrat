@@ -11,6 +11,6 @@ Analysing and Dating of Complex Geological or Archaeological Stratigraphical Fea
 
 -absolut dates
 
-# Installation Guide
+## Installation Guide
 
-# Howto
+## Howto
