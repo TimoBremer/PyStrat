@@ -1,0 +1,16 @@
+# PyStrat
+Analysing and Dating of Complex Geological or Archaeological Stratigraphical Features. Indirect relations between soil or geological strata are deduced from known direct ones (above, under, equal to). Possible contradictions are pointed out. Known absolute dates or phases are correlated with the stratigraphic relations. If useful, suggestions for subphases are made.
+
+## Basic Functioning
+
+-matrices 
+
+-equating rows
+
+-conflict analysis
+
+-absolut dates
+
+# Installation Guide
+
+# Howto
