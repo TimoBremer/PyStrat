@@ -1,5 +1,9 @@
 # PyStrat
-Analysing and dating of complex geological or archaeological stratigraphic sequences. Indirect relations between soil- or geological layeres are deduced from known direct ones (above, under, equal to). Possible contradictions are pointed out. Absolute dates or phases are correlated with the stratigraphic relations. If useful, suggestions for subphases are made.
+Analysing and dating of complex geological or archaeological stratigraphic sequences. 
+- Indirect relations between soil- or geological layeres are deduced from known direct ones (above, under, equal to). 
+- Possible contradictions are pointed out. 
+- Absolute dates or phases are correlated with the stratigraphic relations. 
+- If useful, suggestions for subphases are made.
 
 ## Purpose of the Program
 Die stratigrafische Methode beruht auf vier Regeln: den Gesetzen der Lagerung, der ursprünglichen Horizontalität, der ursprünglichen Kontinuität und der stratigrafischen Abfolge.
@@ -22,7 +26,8 @@ This is the most important table, for entering the stratigraphic relations obser
 --- | --- | ---
 feature 2|above|feature 6
 
-Until now you can display the relations in English (under/above/equal) or in German (unter/ueber/gleich). When you import a text file, the rows must be comma-separated and there must be no line header. Feature names should be in parentheses: 
+Until now you can display the relations in English (under/above/equal) or in German (unter/ueber/gleich). When you import a text file, the rows must be comma-separated and there must be no line header. Feature names should be in parentheses:
+
     "feature 1",above,"feature 6"
     "feature 4",under,"feature 1"
 
