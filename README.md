@@ -86,6 +86,7 @@ feature 1|100|
 feature 2| |100
 feature 3|100|100
 feature 4|100|200
+
 Feature 1 dates somewhere in the timespan from 100 till today. Feature 2 dates before 100. Feature 3 dates exactly in the year 100. Feature 4 dates somewhere in the timespan between 100 and 200.
 
 ### Suggestions for Subphases
