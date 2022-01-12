@@ -7,6 +7,8 @@ from fill_tables import init_tabs, result_tabs, fill_gui
 from gui_windows import app, mainWin
 from tab_create import initial_db
 
+#// TODO: Start ausgrauen, so lange noch nichts in Input Strat. Rel.
+
 init_tabs()
 first_run = True
 

@@ -159,7 +159,6 @@ class EditTabs(StoreabTabs):
         self._ncol = len(self.head_lab)
         self.gui_tab.table.setColumnCount(self._ncol)
     
-    #// FIXME: another row must be entered, when the last row is edited
     def add_row(self):
         self._nrow = self._nrow + 1
         self.gui_tab.table.setRowCount(self._nrow)
@@ -170,6 +169,7 @@ class EditTabs(StoreabTabs):
             self.gui_tab.table.selectedIndexes()))
         return(rows)
     
+    #// FIXME: does not work in Windows
     def check_last_row(self):
         # adds another row in when the last row has been edited
         # mir ist nicht ganz klar warum hier Korrektur -1 nötig?

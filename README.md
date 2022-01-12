@@ -13,18 +13,16 @@ Ziel der stratigrafischen Analyse ist letztlich die Datierung der Schichten. Hie
 - Run the "run_pystrat.py"-script.
 
 ## Howto
-After starting the programm, three tabs for data-input appear. It is mandatory to insert data into the first table (Stratigraphical Relations), the other tables could be left blank. You can insert data directly into the tables or upload text-files by pressing the import-button. Changes could be saved to new text-files for reuse on next run.
-You can run the program by pressing "Start" in the lower part. Afterwards, one or more new tabs will appear. These show logical contradictions in the input data, if there are any. Otherwise the results and possibly suggestions for subphases are displayed. All these tables can also be saved as text-files.
+After starting the programm, three tabs for data-input appear. It is mandatory to insert data into the first table (Stratigraphical Relations), the other tables could be left blank. You can insert data directly into the tables or upload text-files by pressing the import-button. Changes could be saved to new text-files for reuse on next run.\
+You can run the program by pressing "Start" in the lower part. Afterwards, one or more new tabs will appear. These show logical contradictions in the input data, if there are any. Otherwise the results and possibly suggestions for subphases are displayed. All these tables can also be saved as text-files.\
 If any conflicts in the input-data were found, you can overwrite the tables directly to fix it and run the program consecutively until no more errors are found. After that, the correct tables could be saved.
 ### Input Stratigraphical Relations
-This is the most important table, for entering the stratigraphic relations observed in the field. The logical structure is aligned with the direction of reading: The Left feature is under/above or equal to right feature. For example feature 2 is above feature 6.
-
+This is the most important table, for entering the stratigraphic relations observed in the field. The logical structure is aligned with the direction of reading: The Left feature is under/above or equal to right feature. For example feature 2 is above feature 6:
 | **left** |**relation**|**right**|
 --- | --- | ---
 feature 2|above|feature 6
 
-Until now you can display the relations in English (under/above/equal) or in German (unter/ueber/gleich). When you import a text file, the rows must be comma-separated and there must be no line header. Feature names should be in parentheses:
-    
+Until now you can display the relations in English (under/above/equal) or in German (unter/ueber/gleich). When you import a text file, the rows must be comma-separated and there must be no line header. Feature names should be in parentheses: 
     "feature 1",above,"feature 6"
     "feature 4",under,"feature 1"
 
