@@ -26,23 +26,32 @@ The first table ist the most important one. It is for entering the stratigraphic
 --- | --- | ---
 feature 2|above|feature 6
 
-Until now you can display the relations in English (under/above/equal) or in German (unter/ueber/gleich). When you import a text file, the rows must be comma-separated and there must be no line header. Feature names should be in parentheses:
+Until now, you can display the relations in English (under/above/equal) or in German (unter/ueber/gleich). When you import a text file, the rows must be comma-separated and there must be no column headers. When the feature names are text-strings, they should be set in parentheses:
 
     "feature 1",above,"feature 6"
     "feature 4",under,"feature 1"
 
+Such files could be created by exporting spreadsheets from Microsoft Excel or Libre/OpenOffice Calc as csv-tables.  
+
 ### Input Absolute Data or Periods
-In the second table you can assign dates or periods to the findings. The first column is for the feature. It makes sense that all the features listed here should appear in the first table of the stratigraphic relations. You can use absolute dates:
+In the second table you can assign dates or periods to the findings. The first column is for the feature. It makes sense that all the features listed here should appear in the first table of the stratigraphic relations. One option is to use absolute dates. The time before Christ can be displayed with negative numbers:
+| **feature** |**date/period**|
+--- | ---
+feature 1|1066
+feature 4|-350
+
+Another option is the use of period names:
+| **feature** |**date/period**|
+--- | ---
+feature 1|Holocene
+feature 4|Pleistocene
+
+When these names are words instead of numbers or alphabetical sequences, the program is not able to order the phases (Pleistocene is older than Holocene)In this case it is recommended to assign an order to the periods in the following table.\
+If you import the data from a file, the formatting rules are similar to the first table: It must be a comma-separated text-file with no column headers, textstrings should be in parantheses:
 
     "feature 1",1066
-    "feature 4",763
+    "feature 4",-350
 
-...or period names:
-
-    "feature 1","Holocene"
-    "feature 4","Pleistocene"
-
-In the latter case, the program is not able to order the phases (Pleistocene is older than Holocene), so it is recommended to assign an order to the periods in the following table.
 ### Input Periods Order
 
 ### Conflicts in Stratigraphy 

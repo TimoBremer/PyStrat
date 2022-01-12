@@ -6,6 +6,8 @@ from fehlerbeh import fehlerkontrolle, check_initalf_rohdat
 from tab_create import create_ergeb
 from gui_windows import mainWin
 
+#//FIXME: gehen negative Werte für Zeitangaben vor Christi?
+
 # Wenn kein Fehler Auftritt wird Ergänzung der Werte durchgefuehrt,
 # ...bis Anzahl der Zeilen konstant ist:
 ## ...zuerst Definition der Funktion:
