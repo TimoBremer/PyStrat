@@ -21,7 +21,7 @@ After starting the programm, three tabs for data-input appear. It is mandatory t
 You can run the program by pressing "Start" in the lower part. Afterwards, one or more new tabs will appear. These show logical contradictions in the input data, if there are any. Otherwise the results and possibly suggestions for subphases are displayed. All these tables can also be saved as text-files.\
 If any conflicts in the input-data were found, you can overwrite the tables directly to fix it and run the program consecutively until no more errors are found. After that, the correct tables could be saved.
 ### Input Stratigraphical Relations
-This is the most important table, for entering the stratigraphic relations observed in the field. The logical structure is aligned with the direction of reading: The Left feature is under/above or equal to right feature. For example feature 2 is above feature 6:
+The first table ist the most important one. It is for entering the stratigraphic relations observed in the field. The logical structure is aligned with the direction of reading: The Left feature is under/above or equal to right feature. For example feature 2 is above feature 6:
 | **left** |**relation**|**right**|
 --- | --- | ---
 feature 2|above|feature 6
@@ -31,8 +31,18 @@ Until now you can display the relations in English (under/above/equal) or in Ger
     "feature 1",above,"feature 6"
     "feature 4",under,"feature 1"
 
-### Input Absolute Data
+### Input Absolute Data or Periods
+In the second table you can assign dates or periods to the findings. The first column is for the feature. It makes sense that all the features listed here should appear in the first table of the stratigraphic relations. You can use absolute dates:
 
+    "feature 1",1066
+    "feature 4",763
+
+...or period names:
+
+    "feature 1","Holocene"
+    "feature 4","Pleistocene"
+
+In the latter case, the program is not able to order the phases (Pleistocene is older than Holocene), so it is recommended to assign an order to the periods in the following table.
 ### Input Periods Order
 
 ### Conflicts in Stratigraphy 
