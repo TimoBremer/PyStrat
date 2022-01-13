@@ -87,9 +87,14 @@ feature 2| |100
 feature 3|100|100
 feature 4|100|200
 
-Feature 1 dates somewhere in the timespan from 100 till today. Feature 2 dates before 100. Feature 3 dates exactly in the year 100. Feature 4 dates somewhere in the timespan between 100 and 200.
+Feature 1 dates somewhere in the timespan from 100 till the present. Feature 2 dates before 100. Feature 3 dates exactly in the year 100. Feature 4 dates somewhere in the timespan between 100 and 200.
 
 ### Suggestions for Subphases
+Sometimes the periods are spanning several stratigraphic layers. In this case a suggestion is made to split the period into two suphases (period 1a and 1b for instance). In doing so, all features that have more layers below than above them are assigned to "a" and vice versa.\
+
+<img src="https://user-images.githubusercontent.com/34343137/149307235-e2e98b8e-0682-4dbd-aff1-26601497aa77.png" width=40% height=40% alt="Subphases Scheme">
+
+But you have to bear in mind that it is just a proposal: in theory, even hundreds of layers in a period could have been deposited within hours. It is therefore strongly recommended to check with other dating methods, that the layers in the subphases really significantly differ in age.
 
 ## Operating Principles in Detail
 Das Programm verfügt über drei Hauptfunktionen: der eigentlichen Analyse, einer Widerspruchsanalyse und einer optionalen Synchronisierung der Stratigrafie mit absoluten Daten.

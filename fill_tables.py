@@ -251,6 +251,7 @@ class EditTabs(StoreabTabs):
         self.save_prev_dir(path)
         return(path)
     
+    #//FIXME: Programm darf nicht abstürzen, wenn hier bei Import etwas schief geht    
     def import_csv(self):
         path = self.file_dialog_imp()
         _ncol = len(self.head_lab)
