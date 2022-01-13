@@ -7,7 +7,7 @@ Analysing and dating of complex geological or archaeological stratigraphic seque
 
 ## Purpose of the Program
 Die stratigrafische Methode beruht auf vier Regeln: den Gesetzen der Lagerung, der ursprünglichen Horizontalität, der ursprünglichen Kontinuität und der stratigrafischen Abfolge.
-In der Archäologie ist die Anwendung des Stratigrafiegesetzes besonders von E. Harris etabliert worden. Zur Visualisierung entwickelte er die sogenannte Harris-Matrix, in der ausschließlich Beziehungen von direkt aneinander grenzenden Schichten dargestellt werden – keine indirekten (Abb. XY). 
+In der Archäologie ist die Anwendung des Stratigrafiegesetzes besonders von E. Harris etabliert worden. Zur Visualisierung entwickelte er die sogenannte Harris-Matrix as seen below, in der ausschließlich Beziehungen von direkt aneinander grenzenden Schichten dargestellt werden – keine indirekten.\
 Mit einer Harris-Matrix können kleinere stratigraphische Sequenzen übersichtlich dargestellt werden, bei größeren Komplexen entsteht allerdings ein undurchsichtiges durcheinander aus Kästchen und Linien.
 Ziel der stratigrafischen Analyse ist letztlich die Datierung der Schichten. Hierfür sind die in einer Harris-Matrix nicht erfassten indirekten Beziehungen zwischen den Schichten von großer Bedeutung: Wenn beispielsweise Schicht 1 über Schicht 2 liegt und Schicht 2 über Schicht 3, liegt auch Schicht 1 indirekt auch über Schicht 3. Wenn nun Schicht 3 in das Jahr 1631 datiert, lässt sich aus der Analyse der indirekten Beziehungen ableiten, dass Schicht 1 und 2 jünger als 1631 sind. Bei vielen Schichten und mehreren Datierungen werden die Beziehungen so komplex, dass eine Analyse "von Hand", mithilfe von Harris-Matrices, nahezu unmöglich ist. In solchen Fällen ist eine digitale Auswertung erforderlich.
 
@@ -90,11 +90,11 @@ feature 4|100|200
 Feature 1 dates somewhere in the timespan from 100 till the present. Feature 2 dates before 100. Feature 3 dates exactly in the year 100. Feature 4 dates somewhere in the timespan between 100 and 200.
 
 ### Suggestions for Subphases
-Sometimes the periods are spanning several stratigraphic layers. In this case a suggestion is made to split the period into two suphases (period 1a and 1b for instance). In doing so, all features that have more layers below than above them are assigned to "a" and vice versa.\
+Sometimes the periods are spanning several stratigraphic layers. In this case a suggestion is made to split the period into two suphases (period 1a and 1b for instance). In doing so, all features that have more layers below than above are assigned to "a" and vice versa.\
 
 <img src="https://user-images.githubusercontent.com/34343137/149307235-e2e98b8e-0682-4dbd-aff1-26601497aa77.png" width=40% height=40% alt="Subphases Scheme">
 
-But you have to bear in mind that it is just a proposal: in theory, even hundreds of layers in a period could have been deposited within hours. It is therefore strongly recommended to check with other dating methods, that the layers in the subphases really significantly differ in age.
+But you have to bear in mind, that it is just a proposal: in theory, even hundreds of layers in a period could have been deposited within hours. It is therefore strongly recommended to check with other dating methods, that the layers in the subphases significantly differ in age.
 
 ## Operating Principles in Detail
 Das Programm verfügt über drei Hauptfunktionen: der eigentlichen Analyse, einer Widerspruchsanalyse und einer optionalen Synchronisierung der Stratigrafie mit absoluten Daten.
